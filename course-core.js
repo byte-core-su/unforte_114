@@ -27,6 +27,23 @@
     section.innerHTML = `<div class="course-goals-header"><div><p class="course-kicker">LEARNING GOALS</p><h3 id="unit-${unitId}-goals">${escapeHtml(goals.heading)}</h3></div><span class="course-goals-sequence">${escapeHtml(goals.sequence)}</span></div><ul class="course-goals-list">${goals.items.map((item, index) => `<li><span>${String(index + 1).padStart(2, '0')}</span>${escapeHtml(item)}</li>`).join('')}</ul>`;
   }
 
+  function mountCourseMap(config) {
+    const map = document.querySelector('[data-course-map]');
+    if (!map || !config.units) return;
+    const cardStyles = {
+      blue: { card: 'course-card--binary border-blue-100', badge: 'bg-blue-100 text-blue-600', code: 'text-blue-600 bg-blue-50 border-blue-100', link: 'bg-blue-50 text-blue-700 hover:bg-blue-100' },
+      indigo: { card: 'course-card--text border-indigo-100', badge: 'bg-indigo-100 text-indigo-600', code: 'text-indigo-600 bg-indigo-50 border-indigo-100', link: 'bg-indigo-50 text-indigo-700 hover:bg-indigo-100' },
+      teal: { card: 'course-card--audio border-teal-100', badge: 'bg-teal-100 text-teal-600', code: 'text-teal-700 bg-teal-50 border-teal-100', link: 'bg-teal-50 text-teal-700 hover:bg-teal-100' },
+      rose: { card: 'course-card--image border-rose-100', badge: 'bg-rose-100 text-rose-600', code: 'text-rose-600 bg-rose-50 border-rose-100', link: 'bg-rose-50 text-rose-700 hover:bg-rose-100' }
+    };
+    map.innerHTML = Object.entries(config.units).map(([unitId, unit]) => {
+      const style = cardStyles[unit.theme];
+      const card = unit.card;
+      if (!style || !card) return '';
+      return `<article class="course-card ${style.card} bg-white rounded-3xl p-5 border shadow-sm flex flex-col min-h-[245px]"><div class="flex items-start justify-between"><span class="w-12 h-12 rounded-2xl ${style.badge} flex items-center justify-center font-black text-lg">${String(unitId).padStart(2, '0')}</span><span class="font-mono-code text-xs ${style.code} border rounded-full px-2.5 py-1 font-bold">${escapeHtml(card.code)}</span></div><h3 class="mt-5 text-xl font-black text-slate-800">${escapeHtml(card.title)}</h3><p class="mt-2 text-sm text-slate-500 leading-relaxed">${escapeHtml(card.description)}</p><div class="mt-auto pt-4"><a href="${unitId}.html" class="inline-flex items-center rounded-xl ${style.link} px-3 py-2 font-bold text-sm">開始單元 <span class="ml-2">→</span></a></div></article>`;
+    }).join('');
+  }
+
   function mountEndOfUnit(unit, unitId) {
     const reviewSection = document.querySelector(`[aria-labelledby="unit-${unitId}-review"]`);
     if (!reviewSection || !unit.review || !unit.discussion) return;
@@ -70,7 +87,10 @@
     const config = getCourseData();
     const unitId = document.body.dataset.unit;
     const unit = config.units?.[unitId];
-    if (!unit) return;
+    if (!unit) {
+      mountCourseMap(config);
+      return;
+    }
     mountNavigation(config, unitId);
     mountGoals(unit, unitId);
     mountEndOfUnit(unit, unitId);
@@ -78,5 +98,5 @@
 
   if (document.body) initializeCourseCore();
   else document.addEventListener('DOMContentLoaded', initializeCourseCore);
-  window.CourseCore = { initializeCourseCore, mountNavigation, mountGoals, mountEndOfUnit };
+  window.CourseCore = { initializeCourseCore, mountNavigation, mountGoals, mountCourseMap, mountEndOfUnit };
 })();

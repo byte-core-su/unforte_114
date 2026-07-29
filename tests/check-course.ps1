@@ -19,14 +19,21 @@ $styles = Read-Utf8File 'course-components.css'
 
 Assert-Contains $data "navigation:\s*\[" 'Course data is missing centralized navigation.'
 Assert-Contains $data "goals:\s*\{" 'Course data is missing centralized learning goals.'
+Assert-Contains $data "card:\s*\{" 'Course data is missing centralized course-map cards.'
 Assert-Contains $data "units:\s*\{" 'Course data is missing unit configuration.'
 foreach ($unit in 1..4) {
     Assert-Contains $data "'$unit':\s*\{" "Course data is missing unit $unit."
 }
 Assert-Contains $core 'function mountNavigation' 'Shared core is missing navigation rendering.'
 Assert-Contains $core 'function mountGoals' 'Shared core is missing learning-goals rendering.'
+Assert-Contains $core 'function mountCourseMap' 'Shared core is missing course-map rendering.'
 Assert-Contains $core 'function mountEndOfUnit' 'Shared core is missing end-of-unit rendering.'
 Assert-Contains $styles '\.course-goals' 'Shared stylesheet is missing learning-goals styles.'
+
+$homePage = Read-Utf8File 'index.html'
+Assert-Contains $homePage 'data-course-map' 'Homepage is missing the shared course-map mount.'
+Assert-Contains $homePage 'course-data\.js' 'Homepage does not load shared course data.'
+Assert-Contains $homePage 'course-core\.js' 'Homepage does not load the shared course core.'
 
 foreach ($unit in 1..4) {
     $page = Read-Utf8File "$unit.html"
@@ -46,17 +53,25 @@ $unitOne = Read-Utf8File '1.html'
 Assert-Contains $unitOne 'startBonanzaGame' 'Unit 1 is missing Binary Bonanza start.'
 Assert-Contains $unitOne 'selectBonanzaGem' 'Unit 1 is missing alternate gem selection.'
 Assert-Contains $unitOne "event\.key === 'Enter'" 'Unit 1 is missing keyboard Enter handling.'
+Assert-Contains $unitOne "const hint = document.getElementById\('bonanza-selection-hint'\)" 'Unit 1 is missing restart-hint updates.'
 
 $unitTwo = Read-Utf8File '2.html'
 Assert-Contains $unitTwo 'playMysterySignal' 'Unit 2 is missing timed decode start.'
 Assert-Contains $unitTwo 'startSendChallenge' 'Unit 2 is missing send challenge start.'
 Assert-Contains $unitTwo 'checkSendChallenge' 'Unit 2 is missing send challenge checking.'
+Assert-Contains $unitTwo 'morse-keyboard-help' 'Unit 2 is missing keyboard telegraph instructions.'
+Assert-Contains $unitTwo "event\.code === 'Space'" 'Unit 2 is missing Space-key telegraph handling.'
+Assert-Contains $unitTwo 'morse-restart-hint' 'Unit 2 is missing a restart hint.'
+
+$unitThree = Read-Utf8File '3.html'
+Assert-Contains $unitThree 'function updateAudioLearningFeedback' 'Unit 3 is missing interaction guidance.'
 
 $unitFour = Read-Utf8File '4.html'
 Assert-Contains $unitFour 'pe-free-draw-canvas' 'Unit 4 is missing the free-draw canvas.'
 Assert-Contains $unitFour 'pe-drawing-grid' 'Unit 4 is missing the keyboard-accessible quantization grid.'
 Assert-Contains $unitFour "event\.key === 'Enter'" 'Unit 4 is missing keyboard Enter handling.'
 Assert-Contains $unitFour 'pe-compare-modal' 'Unit 4 is missing the quantization comparison dialog.'
+Assert-Contains $unitFour 'pe-restart-hint' 'Unit 4 is missing the restart hint.'
 
 if ($failures.Count -gt 0) {
     Write-Host "Interaction regression check failed ($($failures.Count)/$checks):" -ForegroundColor Red

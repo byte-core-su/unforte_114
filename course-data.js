@@ -9,6 +9,7 @@ window.CourseData = {
   units: {
     '1': {
       theme: 'blue',
+      card: { code: 'BINARY', title: '二進位原理', description: '從位元開始，理解電腦如何用開與關表示數字。' },
       goals: {
         heading: '完成這一單元，你可以……',
         sequence: '建議順序：概念 → 練習 → 挑戰',
@@ -28,6 +29,7 @@ window.CourseData = {
     },
     '2': {
       theme: 'indigo',
+      card: { code: 'TEXT', title: '文字數位化', description: '解讀文字編碼，親手傳送與破解摩斯電碼。' },
       goals: {
         heading: '完成這一單元，你可以……',
         sequence: '建議順序：訊號 → 編碼 → 轉換',
@@ -47,6 +49,7 @@ window.CourseData = {
     },
     '3': {
       theme: 'teal',
+      card: { code: 'AUDIO', title: '音訊數位化', description: '看見聲波、取樣與格式如何保存一段聲音。' },
       goals: {
         heading: '完成這一單元，你可以……',
         sequence: '建議順序：波形 → 取樣 → 格式',
@@ -66,6 +69,7 @@ window.CourseData = {
     },
     '4': {
       theme: 'rose',
+      card: { code: 'IMAGE', title: '影像數位化', description: '從像素、色彩到壓縮，拆解一張圖片的祕密。' },
       goals: {
         heading: '完成這一單元，你可以……',
         sequence: '建議順序：像素 → 色彩 → 壓縮',

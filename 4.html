@@ -391,6 +391,7 @@
                                         <button onclick="peSetFreeDrawMode('eraser')" id="pe-btn-eraser" class="flex-1 py-1.5 bg-white border border-slate-300 text-slate-600 rounded text-xs font-bold shadow-sm transition-all">橡皮擦</button>
                                         <button onclick="peInitFreeDrawCanvas()" class="flex-1 py-1.5 bg-rose-50 text-rose-600 border border-rose-200 rounded text-xs font-bold shadow-sm transition-all hover:bg-rose-100">清除</button>
                                     </div>
+                                    <p id="pe-restart-hint" class="mt-3 text-center text-xs font-bold text-rose-600" aria-live="polite">重新操作提示：先選色票，再在量化格點選或按 Enter 上色。</p>
                                 </div>
 
                                 <div class="text-slate-300 text-2xl rotate-90 sm:rotate-0">➔</div>
@@ -1073,6 +1074,8 @@
         function peResetDrawingGrid() {
             playerGrid = Array(8).fill(null).map(() => Array(8).fill(0));
             peCreateDrawingGrid();
+            const hint = document.getElementById('pe-restart-hint');
+            if (hint) hint.innerText = '量化格已重置：先選色票，再點選或按 Enter 上色。';
         }
 
         let peIsFreeDrawing = false;
@@ -1091,6 +1094,8 @@
             // 填滿白色背景
             peFreeDrawCtx.fillStyle = 'white';
             peFreeDrawCtx.fillRect(0, 0, newCvs.width, newCvs.height);
+            const hint = document.getElementById('pe-restart-hint');
+            if (hint) hint.innerText = '畫布已清除：先用畫筆畫出輪廓，再用量化格重現。';
             
             peFreeDrawCtx.lineCap = 'round';
             peFreeDrawCtx.lineJoin = 'round';
