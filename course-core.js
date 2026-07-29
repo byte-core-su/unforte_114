@@ -3,10 +3,33 @@
     return String(value).replace(/[&<>'"]/g, char => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', "'": '&#39;', '"': '&quot;' }[char]));
   }
 
-  function mountEndOfUnit(unitId) {
-    const unit = JSON.parse(document.documentElement.dataset.courseData || '{}')[unitId];
+  function getCourseData() {
+    try { return JSON.parse(document.documentElement.dataset.courseData || '{}'); }
+    catch (_) { return {}; }
+  }
+
+  function mountNavigation(config, unitId) {
+    const nav = document.querySelector('[data-course-nav]');
+    if (!nav || !Array.isArray(config.navigation)) return;
+    nav.innerHTML = config.navigation.map(item => {
+      const active = item.unit === unitId;
+      const stateClass = active ? 'nav-active' : 'nav-inactive';
+      return `<a href="${escapeHtml(item.href)}" class="nav-btn ${stateClass} shrink-0 whitespace-nowrap px-4 py-2.5 text-sm md:px-6 md:py-3 md:text-base font-bold"${active ? ' aria-current="page"' : ''}>${escapeHtml(item.label)}</a>`;
+    }).join('');
+  }
+
+  function mountGoals(unit, unitId) {
+    const section = document.querySelector('[data-course-goals]') || document.querySelector(`[aria-labelledby="unit-${unitId}-goals"]`);
+    if (!section || !unit.goals) return;
+    const { goals, theme } = unit;
+    section.className = `course-goals course-theme-${theme}`;
+    section.setAttribute('aria-labelledby', `unit-${unitId}-goals`);
+    section.innerHTML = `<div class="course-goals-header"><div><p class="course-kicker">LEARNING GOALS</p><h3 id="unit-${unitId}-goals">${escapeHtml(goals.heading)}</h3></div><span class="course-goals-sequence">${escapeHtml(goals.sequence)}</span></div><ul class="course-goals-list">${goals.items.map((item, index) => `<li><span>${String(index + 1).padStart(2, '0')}</span>${escapeHtml(item)}</li>`).join('')}</ul>`;
+  }
+
+  function mountEndOfUnit(unit, unitId) {
     const reviewSection = document.querySelector(`[aria-labelledby="unit-${unitId}-review"]`);
-    if (!unit || !reviewSection) return;
+    if (!reviewSection || !unit.review || !unit.discussion) return;
     const { review, discussion, theme } = unit;
     const questions = review.questions.map((item, questionIndex) => `<article class="course-question"><p>${escapeHtml(item.question)}</p><div class="course-choice-row">${item.choices.map((choice, choiceIndex) => `<button type="button" class="course-choice" data-review-question="${questionIndex}" data-review-choice="${choiceIndex}" aria-pressed="false">${escapeHtml(choice.label)}</button>`).join('')}</div></article>`).join('');
     reviewSection.className = `course-end-unit course-theme-${theme}`;
@@ -44,14 +67,16 @@
   }
 
   function initializeCourseCore() {
-    if (!document.documentElement.dataset.courseData) {
-      window.addEventListener('load', initializeCourseCore, { once: true });
-      return;
-    }
-    mountEndOfUnit(document.body.dataset.unit);
+    const config = getCourseData();
+    const unitId = document.body.dataset.unit;
+    const unit = config.units?.[unitId];
+    if (!unit) return;
+    mountNavigation(config, unitId);
+    mountGoals(unit, unitId);
+    mountEndOfUnit(unit, unitId);
   }
 
   if (document.body) initializeCourseCore();
   else document.addEventListener('DOMContentLoaded', initializeCourseCore);
-  window.CourseCore = { mountEndOfUnit };
+  window.CourseCore = { initializeCourseCore, mountNavigation, mountGoals, mountEndOfUnit };
 })();

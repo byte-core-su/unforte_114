@@ -40,7 +40,7 @@
             <p class="text-slate-500 text-lg font-medium tracking-wide mb-2">資料表示與處理</p>
         </header>
 
-        <nav class="course-nav flex flex-nowrap md:flex-wrap gap-2 overflow-x-auto md:overflow-visible justify-start md:justify-center -mx-4 px-4 md:mx-0 md:px-0 animate-fade-up shrink-0 pb-4" style="animation-delay: 0.1s;">
+        <nav class="course-nav flex flex-nowrap md:flex-wrap gap-2 overflow-x-auto md:overflow-visible justify-start md:justify-center -mx-4 px-4 md:mx-0 md:px-0 animate-fade-up shrink-0 pb-4" style="animation-delay: 0.1s;" data-course-nav>
             <a href="index.html" class="nav-btn nav-inactive shrink-0 whitespace-nowrap px-4 py-2.5 text-sm md:px-5 md:py-3 md:text-base font-bold">課程地圖</a>
             <a href="1.html" class="nav-btn nav-inactive shrink-0 whitespace-nowrap px-4 py-2.5 text-sm md:px-6 md:py-3 md:text-base font-bold">單元一：二進位原理</a>
             <a href="2.html" class="nav-btn nav-inactive shrink-0 whitespace-nowrap px-4 py-2.5 text-sm md:px-6 md:py-3 md:text-base font-bold">單元二：文字數位化</a>
@@ -56,7 +56,7 @@
                     <div><h2 class="text-2xl md:text-3xl font-bold text-slate-800">單元三：音訊數位化</h2><p class="text-slate-500 mt-1 text-sm">聲音是物理波動，電腦將其轉換成 0 與 1 的過程。</p></div>
                 </div>
 
-                <section class="mb-8 rounded-3xl border border-teal-100 bg-teal-50/70 p-5 md:p-6" aria-labelledby="unit-three-goals"><div class="flex flex-col gap-4 md:flex-row md:items-center md:justify-between"><div><p class="text-xs font-black tracking-[0.18em] text-teal-600">LEARNING GOALS</p><h3 id="unit-three-goals" class="mt-1 text-xl font-black text-slate-800">完成這一單元，你可以……</h3></div><span class="w-fit rounded-full bg-white px-3 py-1 text-xs font-bold text-teal-600 shadow-sm">建議順序：波形 → 取樣 → 格式</span></div><ul class="mt-5 grid gap-3 md:grid-cols-3 text-sm text-slate-600"><li class="rounded-2xl bg-white/90 p-3"><span class="font-black text-teal-600">01</span> 用振幅、頻率與音色描述聲音。</li><li class="rounded-2xl bg-white/90 p-3"><span class="font-black text-teal-600">02</span> 說明聲音取樣與量化的步驟。</li><li class="rounded-2xl bg-white/90 p-3"><span class="font-black text-teal-600">03</span> 比較 WAV、MP3 與 MIDI 的特性。</li></ul></section>
+                <section class="mb-8 rounded-3xl border border-teal-100 bg-teal-50/70 p-5 md:p-6" aria-labelledby="unit-three-goals" data-course-goals><div class="flex flex-col gap-4 md:flex-row md:items-center md:justify-between"><div><p class="text-xs font-black tracking-[0.18em] text-teal-600">LEARNING GOALS</p><h3 id="unit-three-goals" class="mt-1 text-xl font-black text-slate-800">完成這一單元，你可以……</h3></div><span class="w-fit rounded-full bg-white px-3 py-1 text-xs font-bold text-teal-600 shadow-sm">建議順序：波形 → 取樣 → 格式</span></div><ul class="mt-5 grid gap-3 md:grid-cols-3 text-sm text-slate-600"><li class="rounded-2xl bg-white/90 p-3"><span class="font-black text-teal-600">01</span> 用振幅、頻率與音色描述聲音。</li><li class="rounded-2xl bg-white/90 p-3"><span class="font-black text-teal-600">02</span> 說明聲音取樣與量化的步驟。</li><li class="rounded-2xl bg-white/90 p-3"><span class="font-black text-teal-600">03</span> 比較 WAV、MP3 與 MIDI 的特性。</li></ul></section>
 
                 <div class="flex gap-2 mb-8 overflow-x-auto pb-2">
                     <button onclick="switchAudioSubTab('prop')" id="sub-audio-prop" class="px-5 py-2.5 rounded-full text-sm font-bold bg-teal-500 text-white shadow-sm whitespace-nowrap">1. 聲音物理要素</button>
