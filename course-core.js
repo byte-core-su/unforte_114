@@ -44,6 +44,18 @@
     }).join('');
   }
 
+  function mountLearningPath(config) {
+    const path = document.querySelector('[data-learning-path]');
+    if (!path || !config.units) return;
+    path.innerHTML = Object.entries(config.units).map(([unitId, unit], index) => {
+      const title = unit.card?.title;
+      if (!title) return '';
+      const leadStyle = index === 0 ? 'bg-white text-blue-600' : 'bg-white/20';
+      const rowStyle = index === 0 ? 'bg-white/15 border-white/15' : 'bg-white/10 border-white/10';
+      return `<a href="${unitId}.html" class="flex items-center gap-4 rounded-2xl ${rowStyle} px-4 py-3 border transition hover:bg-white/20"><span class="w-8 h-8 rounded-xl ${leadStyle} flex items-center justify-center font-black">${unitId}</span><span class="font-bold">${escapeHtml(title)}</span><span class="ml-auto text-blue-100">${String(unitId).padStart(2, '0')}</span></a>`;
+    }).join('');
+  }
+
   function mountEndOfUnit(unit, unitId) {
     const reviewSection = document.querySelector(`[aria-labelledby="unit-${unitId}-review"]`);
     if (!reviewSection || !unit.review || !unit.discussion) return;
@@ -89,6 +101,7 @@
     const unit = config.units?.[unitId];
     if (!unit) {
       mountCourseMap(config);
+      mountLearningPath(config);
       return;
     }
     mountNavigation(config, unitId);
@@ -98,5 +111,5 @@
 
   if (document.body) initializeCourseCore();
   else document.addEventListener('DOMContentLoaded', initializeCourseCore);
-  window.CourseCore = { initializeCourseCore, mountNavigation, mountGoals, mountCourseMap, mountEndOfUnit };
+  window.CourseCore = { initializeCourseCore, mountNavigation, mountGoals, mountCourseMap, mountLearningPath, mountEndOfUnit };
 })();

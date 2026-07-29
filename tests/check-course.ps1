@@ -27,11 +27,13 @@ foreach ($unit in 1..4) {
 Assert-Contains $core 'function mountNavigation' 'Shared core is missing navigation rendering.'
 Assert-Contains $core 'function mountGoals' 'Shared core is missing learning-goals rendering.'
 Assert-Contains $core 'function mountCourseMap' 'Shared core is missing course-map rendering.'
+Assert-Contains $core 'function mountLearningPath' 'Shared core is missing learning-path rendering.'
 Assert-Contains $core 'function mountEndOfUnit' 'Shared core is missing end-of-unit rendering.'
 Assert-Contains $styles '\.course-goals' 'Shared stylesheet is missing learning-goals styles.'
 
 $homePage = Read-Utf8File 'index.html'
 Assert-Contains $homePage 'data-course-map' 'Homepage is missing the shared course-map mount.'
+Assert-Contains $homePage 'data-learning-path' 'Homepage is missing the shared learning-path mount.'
 Assert-Contains $homePage 'course-data\.js' 'Homepage does not load shared course data.'
 Assert-Contains $homePage 'course-core\.js' 'Homepage does not load the shared course core.'
 
@@ -62,6 +64,8 @@ Assert-Contains $unitTwo 'checkSendChallenge' 'Unit 2 is missing send challenge 
 Assert-Contains $unitTwo 'morse-keyboard-help' 'Unit 2 is missing keyboard telegraph instructions.'
 Assert-Contains $unitTwo "event\.code === 'Space'" 'Unit 2 is missing Space-key telegraph handling.'
 Assert-Contains $unitTwo 'morse-restart-hint' 'Unit 2 is missing a restart hint.'
+Assert-Contains $unitTwo 'morse-demo-sos-btn' 'Unit 2 is missing the SOS demonstration button.'
+Assert-Contains $unitTwo 'function demoSosTelegraph' 'Unit 2 is missing SOS demonstration logic.'
 
 $unitThree = Read-Utf8File '3.html'
 Assert-Contains $unitThree 'function updateAudioLearningFeedback' 'Unit 3 is missing interaction guidance.'
@@ -72,6 +76,10 @@ Assert-Contains $unitFour 'pe-drawing-grid' 'Unit 4 is missing the keyboard-acce
 Assert-Contains $unitFour "event\.key === 'Enter'" 'Unit 4 is missing keyboard Enter handling.'
 Assert-Contains $unitFour 'pe-compare-modal' 'Unit 4 is missing the quantization comparison dialog.'
 Assert-Contains $unitFour 'pe-restart-hint' 'Unit 4 is missing the restart hint.'
+Assert-Contains $unitFour 'peApplyReferencePattern' 'Unit 4 is missing reference-pattern logic.'
+Assert-Contains $unitFour "'heart'" 'Unit 4 is missing the heart reference pattern.'
+Assert-Contains $unitFour "'smile'" 'Unit 4 is missing the smile reference pattern.'
+Assert-Contains $unitFour "'rocket'" 'Unit 4 is missing the rocket reference pattern.'
 
 if ($failures.Count -gt 0) {
     Write-Host "Interaction regression check failed ($($failures.Count)/$checks):" -ForegroundColor Red

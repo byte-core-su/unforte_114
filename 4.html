@@ -381,6 +381,7 @@
                                 <!-- 自由畫布區 -->
                                 <div class="flex flex-col items-center w-full max-w-[200px]">
                                     <h4 class="font-bold text-slate-600 mb-3 text-sm">1. 在此繪製真實圖案</h4>
+                                    <div class="mb-3 grid grid-cols-3 gap-1.5 text-[11px] font-bold"><button type="button" onclick="peApplyReferencePattern('heart')" class="rounded-lg border border-rose-200 bg-rose-50 px-2 py-1.5 text-rose-700 hover:bg-rose-100">♥ 愛心</button><button type="button" onclick="peApplyReferencePattern('smile')" class="rounded-lg border border-amber-200 bg-amber-50 px-2 py-1.5 text-amber-700 hover:bg-amber-100">☺ 笑臉</button><button type="button" onclick="peApplyReferencePattern('rocket')" class="rounded-lg border border-sky-200 bg-sky-50 px-2 py-1.5 text-sky-700 hover:bg-sky-100">▲ 火箭</button></div>
                                     <div class="relative w-full aspect-square border-2 border-slate-300 rounded-lg overflow-hidden shadow-sm bg-white">
                                         <canvas id="pe-free-draw-canvas" width="200" height="200" class="absolute inset-0 z-10 touch-none cursor-crosshair"></canvas>
                                         <!-- 輔助網格 -->
@@ -1140,6 +1141,29 @@
             newCvs.addEventListener('touchend', stopDraw);
         }
 
+        function peApplyReferencePattern(patternName) {
+            const patterns = {
+                heart: ['00100100', '01111110', '11111111', '11111111', '01111110', '00111100', '00011000', '00000000'],
+                smile: ['00111100', '01000010', '10100101', '10000001', '10100101', '10011001', '01000010', '00111100'],
+                rocket: ['00011000', '00111100', '01111110', '11011011', '11111111', '01011010', '01011010', '11000011']
+            };
+            const pattern = patterns[patternName];
+            if (!pattern) return;
+            peInitFreeDrawCanvas();
+            const canvas = document.getElementById('pe-free-draw-canvas');
+            const context = canvas?.getContext('2d');
+            if (!canvas || !context) return;
+            playerGrid = pattern.map(row => [...row].map(value => Number(value)));
+            const cellSize = canvas.width / 8;
+            context.fillStyle = '#1e293b';
+            playerGrid.forEach((row, rowIndex) => row.forEach((value, columnIndex) => { if (value) context.fillRect(columnIndex * cellSize + 3, rowIndex * cellSize + 3, cellSize - 6, cellSize - 6); }));
+            peSelectedColor = 1;
+            peSelectColor(1);
+            peCreateDrawingGrid();
+            const hint = document.getElementById('pe-restart-hint');
+            if (hint) hint.innerText = `已套用${({ heart: '愛心', smile: '笑臉', rocket: '火箭' })[patternName]}參考圖案：可直接比較，或再自行修改。`;
+        }
+
         function peSetFreeDrawMode(mode) {
             peFreeDrawMode = mode;
             const btnBrush = document.getElementById('pe-btn-brush');
@@ -1174,6 +1198,7 @@
                     const cell = document.createElement('button');
                     cell.type = 'button';
                     cell.className = "pe-sampling-cell bg-white border border-slate-200";
+                    cell.style.backgroundColor = playerGrid[r][c] === 1 ? '#1e293b' : '#ffffff';
                     cell.dataset.row = r;
                     cell.dataset.col = c;
                     cell.setAttribute('aria-label', `第 ${r + 1} 列、第 ${c + 1} 格；按 Enter 填入目前色彩`);
