@@ -4,7 +4,7 @@
   }
 
   function mountEndOfUnit(unitId) {
-    const unit = window.CourseData?.[unitId];
+    const unit = JSON.parse(document.documentElement.dataset.courseData || '{}')[unitId];
     const reviewSection = document.querySelector(`[aria-labelledby="unit-${unitId}-review"]`);
     if (!unit || !reviewSection) return;
     const { review, discussion, theme } = unit;
@@ -44,7 +44,7 @@
   }
 
   function initializeCourseCore() {
-    if (!window.CourseData) {
+    if (!document.documentElement.dataset.courseData) {
       window.addEventListener('load', initializeCourseCore, { once: true });
       return;
     }

@@ -208,6 +208,9 @@
 
 
 
+        const reviewPassed = new Set();
+        function answerReview(question, isCorrect, button, hint = '') { const feedback = document.getElementById('review-feedback'), score = document.getElementById('review-score'); if (!feedback || !score) return; if (isCorrect) { reviewPassed.add(question); button.className = 'bg-emerald-500 text-white border-emerald-600 rounded px-2 py-1'; feedback.innerText = `✅ 第 ${question} 題答對了！`; } else { feedback.innerText = `💡 ${hint}`; } score.innerText = `${reviewPassed.size} / 3`; if (reviewPassed.size === 3) document.getElementById('review-badge')?.classList.remove('hidden'); }
+        function chooseDiscussion(choice, button) { document.querySelectorAll('.discussion-btn').forEach(item => item.classList.remove('is-selected')); button.classList.add('is-selected'); const feedback = document.getElementById('discussion-feedback'); if (feedback) feedback.innerText = `你選擇「${choice}」。接著和同伴輪流完成：「我選這個，因為……」與「我同意／我有不同想法，因為……」。`; }
         window.onload = function() {
             initBinaryGame(); 
             generateBonanzaGrid(); 

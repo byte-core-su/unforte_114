@@ -56,3 +56,4 @@ window.CourseData = {
     discussion: { scenario: "要製作透明背景的社團 Logo 並放上網站，你會怎麼選？", choices: ["PNG：保留透明背景與清楚邊緣", "JPG：把照片壓縮得更小"] }
   }
 };
+document.documentElement.dataset.courseData = JSON.stringify(window.CourseData);
