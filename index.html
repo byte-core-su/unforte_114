@@ -19,6 +19,10 @@
         .course-card { transition: transform 0.2s cubic-bezier(0.2, 0.8, 0.2, 1), box-shadow 0.2s ease, border-color 0.2s ease; }
         .course-card:hover { transform: translateY(-7px); box-shadow: 0 20px 32px rgba(30, 64, 175, 0.14); }
         .course-card:focus-within { outline: 3px solid rgba(59, 130, 246, 0.35); outline-offset: 4px; }
+        .course-card--binary:hover { border-color: #60a5fa; box-shadow: 0 20px 32px rgba(37, 99, 235, 0.18); }
+        .course-card--text:hover { border-color: #818cf8; box-shadow: 0 20px 32px rgba(79, 70, 229, 0.18); }
+        .course-card--audio:hover { border-color: #2dd4bf; box-shadow: 0 20px 32px rgba(13, 148, 136, 0.18); }
+        .course-card--image:hover { border-color: #fb7185; box-shadow: 0 20px 32px rgba(225, 29, 72, 0.18); }
         @keyframes fadeUp { from { opacity: 0; transform: translateY(15px); } to { opacity: 1; transform: translateY(0); } }
         .animate-fade-up { animation: fadeUp 0.5s cubic-bezier(0.2, 0.8, 0.2, 1) forwards; }
         @keyframes float { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-9px); } }
@@ -88,25 +92,25 @@
                 </div>
 
                 <div class="grid sm:grid-cols-2 lg:grid-cols-4 gap-5">
-                    <article class="course-card bg-white rounded-3xl p-5 border border-blue-100 shadow-sm flex flex-col min-h-[245px]">
-                        <div class="flex items-start justify-between"><span class="w-12 h-12 rounded-2xl bg-blue-100 text-blue-600 flex items-center justify-center font-black text-lg">01</span><span class="font-mono-code text-sm text-blue-300 font-bold">BINARY</span></div>
+                    <article class="course-card course-card--binary bg-white rounded-3xl p-5 border border-blue-100 shadow-sm flex flex-col min-h-[245px]">
+                        <div class="flex items-start justify-between"><span class="w-12 h-12 rounded-2xl bg-blue-100 text-blue-600 flex items-center justify-center font-black text-lg">01</span><span class="font-mono-code text-xs text-blue-600 bg-blue-50 border border-blue-100 rounded-full px-2.5 py-1 font-bold">BINARY</span></div>
                         <h3 class="mt-5 text-xl font-black text-slate-800">二進位原理</h3><p class="mt-2 text-sm text-slate-500 leading-relaxed">從位元開始，理解電腦如何用開與關表示數字。</p>
-                        <div class="mt-auto pt-4"><a href="1.html" class="inline-flex items-center text-blue-600 font-bold text-sm hover:text-blue-800">開始單元 <span class="ml-2">→</span></a></div>
+                        <div class="mt-auto pt-4"><a href="1.html" class="inline-flex items-center rounded-xl bg-blue-50 px-3 py-2 text-blue-700 font-bold text-sm hover:bg-blue-100">開始單元 <span class="ml-2">→</span></a></div>
                     </article>
-                    <article class="course-card bg-white rounded-3xl p-5 border border-indigo-100 shadow-sm flex flex-col min-h-[245px]">
-                        <div class="flex items-start justify-between"><span class="w-12 h-12 rounded-2xl bg-indigo-100 text-indigo-600 flex items-center justify-center font-black text-lg">02</span><span class="font-mono-code text-sm text-indigo-300 font-bold">TEXT</span></div>
+                    <article class="course-card course-card--text bg-white rounded-3xl p-5 border border-indigo-100 shadow-sm flex flex-col min-h-[245px]">
+                        <div class="flex items-start justify-between"><span class="w-12 h-12 rounded-2xl bg-indigo-100 text-indigo-600 flex items-center justify-center font-black text-lg">02</span><span class="font-mono-code text-xs text-indigo-600 bg-indigo-50 border border-indigo-100 rounded-full px-2.5 py-1 font-bold">TEXT</span></div>
                         <h3 class="mt-5 text-xl font-black text-slate-800">文字數位化</h3><p class="mt-2 text-sm text-slate-500 leading-relaxed">解讀文字編碼，親手傳送與破解摩斯電碼。</p>
-                        <div class="mt-auto pt-4"><a href="2.html" class="inline-flex items-center text-indigo-600 font-bold text-sm hover:text-indigo-800">開始單元 <span class="ml-2">→</span></a></div>
+                        <div class="mt-auto pt-4"><a href="2.html" class="inline-flex items-center rounded-xl bg-indigo-50 px-3 py-2 text-indigo-700 font-bold text-sm hover:bg-indigo-100">開始單元 <span class="ml-2">→</span></a></div>
                     </article>
-                    <article class="course-card bg-white rounded-3xl p-5 border border-teal-100 shadow-sm flex flex-col min-h-[245px]">
-                        <div class="flex items-start justify-between"><span class="w-12 h-12 rounded-2xl bg-teal-100 text-teal-600 flex items-center justify-center font-black text-lg">03</span><span class="font-mono-code text-sm text-teal-300 font-bold">AUDIO</span></div>
+                    <article class="course-card course-card--audio bg-white rounded-3xl p-5 border border-teal-100 shadow-sm flex flex-col min-h-[245px]">
+                        <div class="flex items-start justify-between"><span class="w-12 h-12 rounded-2xl bg-teal-100 text-teal-600 flex items-center justify-center font-black text-lg">03</span><span class="font-mono-code text-xs text-teal-700 bg-teal-50 border border-teal-100 rounded-full px-2.5 py-1 font-bold">AUDIO</span></div>
                         <h3 class="mt-5 text-xl font-black text-slate-800">音訊數位化</h3><p class="mt-2 text-sm text-slate-500 leading-relaxed">看見聲波、取樣與格式如何保存一段聲音。</p>
-                        <div class="mt-auto pt-4"><a href="3.html" class="inline-flex items-center text-teal-600 font-bold text-sm hover:text-teal-800">開始單元 <span class="ml-2">→</span></a></div>
+                        <div class="mt-auto pt-4"><a href="3.html" class="inline-flex items-center rounded-xl bg-teal-50 px-3 py-2 text-teal-700 font-bold text-sm hover:bg-teal-100">開始單元 <span class="ml-2">→</span></a></div>
                     </article>
-                    <article class="course-card bg-white rounded-3xl p-5 border border-violet-100 shadow-sm flex flex-col min-h-[245px]">
-                        <div class="flex items-start justify-between"><span class="w-12 h-12 rounded-2xl bg-violet-100 text-violet-600 flex items-center justify-center font-black text-lg">04</span><span class="font-mono-code text-sm text-violet-300 font-bold">IMAGE</span></div>
+                    <article class="course-card course-card--image bg-white rounded-3xl p-5 border border-rose-100 shadow-sm flex flex-col min-h-[245px]">
+                        <div class="flex items-start justify-between"><span class="w-12 h-12 rounded-2xl bg-rose-100 text-rose-600 flex items-center justify-center font-black text-lg">04</span><span class="font-mono-code text-xs text-rose-600 bg-rose-50 border border-rose-100 rounded-full px-2.5 py-1 font-bold">IMAGE</span></div>
                         <h3 class="mt-5 text-xl font-black text-slate-800">影像數位化</h3><p class="mt-2 text-sm text-slate-500 leading-relaxed">從像素、色彩到壓縮，拆解一張圖片的祕密。</p>
-                        <div class="mt-auto pt-4"><a href="4.html" class="inline-flex items-center text-violet-600 font-bold text-sm hover:text-violet-800">開始單元 <span class="ml-2">→</span></a></div>
+                        <div class="mt-auto pt-4"><a href="4.html" class="inline-flex items-center rounded-xl bg-rose-50 px-3 py-2 text-rose-700 font-bold text-sm hover:bg-rose-100">開始單元 <span class="ml-2">→</span></a></div>
                     </article>
                 </div>
             </section>
