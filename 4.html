@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>0與1的藝術 - 單元四</title>
     <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="course-components.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;700;900&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
     <style>
@@ -78,13 +79,9 @@
         .timer-urgent { color: #ef4444 !important; animation: pulse 1s infinite; }
         @keyframes pulse { 0%, 100% { opacity: 1; } 50% { opacity: 0.5; } }
         #img-game-overlay { backdrop-filter: blur(6px); -webkit-backdrop-filter: blur(6px); }
-        .review-btn { display: inline-flex; flex: 1; justify-content: center; border: 1px solid #cbd5e1; border-radius: .6rem; padding: .45rem .6rem; font-weight: 700; font-size: .8rem; color: #475569; background: #fff; transition: .2s; }
-        .review-btn:hover { background: #fff1f2; }
-        .discussion-btn { border: 1px solid #fecdd3; border-radius: .75rem; padding: .7rem 1rem; font-weight: 700; font-size: .875rem; color: #9f1239; background: #fff1f2; text-align: left; transition: .2s; }
-        .discussion-btn:hover, .discussion-btn.is-selected { color: #fff; background: #e11d48; border-color: #e11d48; }
     </style>
 </head>
-<body class="theme-rose p-4 md:p-8 relative">
+<body class="theme-rose p-4 md:p-8 relative" data-unit="4">
     
     <!-- 背景裝飾 -->
     <div class="fixed top-[-10%] left-[-5%] w-96 h-96 bg-blue-200/40 rounded-full mix-blend-multiply filter blur-3xl opacity-70 animate-blob -z-10"></div>
@@ -364,14 +361,14 @@
                                 <div class="bg-white p-4 rounded-2xl border border-slate-200 shadow-sm text-center">
                                     <h4 class="font-bold text-slate-600 mb-3 text-sm">調色盤 (顏色代碼)</h4>
                                     <div class="flex justify-center gap-4">
-                                        <div class="flex flex-col items-center gap-1 cursor-pointer group" onclick="peSelectColor(0)">
+                                        <button type="button" class="flex flex-col items-center gap-1 cursor-pointer group" onclick="peSelectColor(0)" aria-label="選擇白色，代碼 0">
                                             <div class="w-12 h-12 border-2 border-slate-300 bg-white rounded-xl shadow-sm transition-all group-hover:scale-110" id="pe-color-0"></div>
                                             <span class="text-xs font-bold text-slate-500">白色 (0)</span>
-                                        </div>
-                                        <div class="flex flex-col items-center gap-1 cursor-pointer group" onclick="peSelectColor(1)">
+                                        </button>
+                                        <button type="button" class="flex flex-col items-center gap-1 cursor-pointer group" onclick="peSelectColor(1)" aria-label="選擇黑色，代碼 1">
                                             <div class="w-12 h-12 border-2 border-slate-800 bg-slate-800 rounded-xl shadow-sm transition-all ring-offset-2 ring-2 ring-orange-400 group-hover:scale-110" id="pe-color-1"></div>
                                             <span class="text-xs font-bold text-slate-800">黑色 (1)</span>
-                                        </div>
+                                        </button>
                                     </div>
                                 </div>
                                 <button onclick="peCompareDigitization()" class="w-full bg-orange-500 hover:bg-orange-600 text-white font-bold py-3 px-6 rounded-xl transition-colors shadow-sm text-sm">
@@ -734,12 +731,6 @@
                 if (onOk) onOk();
             };
             modal.classList.remove('hidden');
-        }
-
-        function switchTab(tabName) {
-            if(tabName !== 'image') {
-                showCustomModal('系統提示', '此為單元四獨立測試檔，其他單元尚未載入！\n(與完整版合併後即可正常切換)');
-            }
         }
 
         function switchImageSubTab(subTabName) {
@@ -1175,10 +1166,12 @@
 
             for (let r = 0; r < 8; r++) {
                 for (let c = 0; c < 8; c++) {
-                    const cell = document.createElement('div');
+                    const cell = document.createElement('button');
+                    cell.type = 'button';
                     cell.className = "pe-sampling-cell bg-white border border-slate-200";
                     cell.dataset.row = r;
                     cell.dataset.col = c;
+                    cell.setAttribute('aria-label', `第 ${r + 1} 列、第 ${c + 1} 格；按 Enter 填入目前色彩`);
                     
                     const paintCell = (evt) => {
                         if(evt && evt.type === 'touchstart') evt.preventDefault();
@@ -1187,6 +1180,8 @@
                     };
 
                     cell.addEventListener('mousedown', (e) => { isGridMouseDown = true; paintCell(e); });
+                    cell.addEventListener('click', paintCell);
+                    cell.addEventListener('keydown', (event) => { if (event.key === 'Enter' || event.key === ' ') { event.preventDefault(); paintCell(event); } });
                     cell.addEventListener('mouseenter', (e) => { if (isGridMouseDown) paintCell(e); });
                     cell.addEventListener('touchstart', (e) => { isGridMouseDown = true; paintCell(e); }, {passive: false});
                     cell.addEventListener('touchmove', (e) => {
@@ -1717,8 +1712,6 @@
         // ==========================================
         // (4) 壓縮體驗互動 & 測驗題邏輯
         // ==========================================
-        const reviewPassed = new Set();
-        function answerReview(question, isCorrect, button, hint = '') { const feedback = document.getElementById('review-feedback'); const score = document.getElementById('review-score'); if (!feedback || !score) return; if (isCorrect) { reviewPassed.add(question); button.className = 'review-btn bg-emerald-500 text-white border-emerald-600'; feedback.innerText = `✅ 第 ${question} 題答對了！`; } else { button.className = 'review-btn bg-rose-100 text-rose-700 border-rose-300'; feedback.innerText = `💡 ${hint}`; } score.innerText = `${reviewPassed.size} / 3`; if (reviewPassed.size === 3) document.getElementById('review-badge')?.classList.remove('hidden'); }
 
         function checkFormatQuiz(scenario, answer, btn) {
             const feedback = document.getElementById(`quiz-feedback-${scenario}`);
@@ -1831,7 +1824,6 @@
         // ==========================================
         // 頁面初始化載入
         // ==========================================
-        function chooseDiscussion(choice, button) { document.querySelectorAll('.discussion-btn').forEach(item => item.classList.remove('is-selected')); button.classList.add('is-selected'); const feedback = document.getElementById('discussion-feedback'); if (feedback) feedback.innerText = `你選擇「${choice}」。接著和同伴輪流完成：「我選這個，因為……」與「我同意／我有不同想法，因為……」。`; }
 
         window.onload = function() {
             switchImageSubTab('intro'); 
@@ -1862,5 +1854,7 @@
             });
         };
     </script>
+    <script src="course-data.js"></script>
+    <script src="course-core.js"></script>
 </body>
 </html>

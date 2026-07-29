@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>0與1的藝術 - 單元一</title>
     <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="course-components.css">
     <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;700;900&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
     <style>
         body { font-family: 'Noto Sans TC', sans-serif; background: linear-gradient(135deg, #f0f9ff 0%, #e0f2fe 100%); color: #1e293b; min-height: 100vh; margin: 0; display: flex; flex-direction: column; }
@@ -31,13 +32,9 @@
         .quiz-toggle-box:active { transform: scale(0.9); }
         .quiz-toggle-box.bit-1 { background-color: #3b82f6; color: white; border-color: #2563eb; }
         .quiz-toggle-box.dec-box { background-color: #eff6ff; border-color: #bfdbfe; color: #2563eb; }
-        .review-btn { display: inline-flex; flex: 1; justify-content: center; border: 1px solid #cbd5e1; border-radius: .6rem; padding: .45rem .6rem; font-weight: 700; font-size: .8rem; color: #475569; background: #fff; transition: .2s; }
-        .review-btn:hover { background: #eff6ff; }
-        .discussion-btn { border: 1px solid #bfdbfe; border-radius: .75rem; padding: .7rem 1rem; font-weight: 700; font-size: .875rem; color: #1e40af; background: #eff6ff; text-align: left; transition: .2s; }
-        .discussion-btn:hover, .discussion-btn.is-selected { color: #fff; background: #2563eb; border-color: #2563eb; }
     </style>
 </head>
-<body class="p-4 md:p-8 relative">
+<body class="p-4 md:p-8 relative" data-unit="1">
     <div class="fixed top-[-10%] left-[-5%] w-96 h-96 bg-blue-200/40 rounded-full mix-blend-multiply filter blur-3xl opacity-70 -z-10"></div>
     <div class="fixed top-[20%] right-[-5%] w-72 h-72 bg-purple-200/40 rounded-full mix-blend-multiply filter blur-3xl opacity-70 -z-10" style="animation-delay: 2s;"></div>
 
@@ -186,6 +183,9 @@
         function startBonanzaGame() { isGameRunning = true; bonanzaScore = 0; bonanzaLevel = 1; bonanzaTimeLeft = 60; selectedGems = []; if (document.getElementById('game-score')) document.getElementById('game-score').innerText = bonanzaScore; if (document.getElementById('game-level')) document.getElementById('game-level').innerText = bonanzaLevel; if (document.getElementById('game-time-left')) document.getElementById('game-time-left').innerText = `${bonanzaTimeLeft}s`; if (document.getElementById('game-over-overlay')) document.getElementById('game-over-overlay').classList.add('hidden'); if (document.getElementById('bonanza-start-btn')) document.getElementById('bonanza-start-btn').innerText = "重置 ⚡"; generateBonanzaGrid(); generateNewTarget(); updateSlots(); if(bonanzaTimerInterval) clearInterval(bonanzaTimerInterval); bonanzaTimerInterval = setInterval(() => { bonanzaTimeLeft--; if (document.getElementById('game-time-left')) document.getElementById('game-time-left').innerText = `${bonanzaTimeLeft}s`; if(bonanzaTimeLeft === 45) { bonanzaLevel = 2; if (document.getElementById('game-level')) document.getElementById('game-level').innerText = bonanzaLevel; } if(bonanzaTimeLeft === 30) { bonanzaLevel = 3; if (document.getElementById('game-level')) document.getElementById('game-level').innerText = bonanzaLevel; } if(bonanzaTimeLeft === 15) { bonanzaLevel = 4; if (document.getElementById('game-level')) document.getElementById('game-level').innerText = bonanzaLevel; } if(bonanzaTimeLeft <= 0) endBonanzaGame(); }, 1000); }
         function endBonanzaGame() { isGameRunning = false; clearInterval(bonanzaTimerInterval); if (document.getElementById('final-score')) document.getElementById('final-score').innerText = bonanzaScore; if (document.getElementById('game-over-overlay')) document.getElementById('game-over-overlay').classList.replace('hidden', 'flex'); if (document.getElementById('bonanza-start-btn')) document.getElementById('bonanza-start-btn').innerText = "開始 ⚡"; }
         function generateBonanzaGrid() { const gridContainer = document.getElementById('bonanza-grid'); if (!gridContainer) return; gridContainer.innerHTML = ''; bonanzaGridData = []; gridContainer.style.touchAction = 'none'; gridContainer.ontouchmove = (e) => { e.preventDefault(); if(!isDragging || !isGameRunning) return; const touch = e.touches[0]; const el = document.elementFromPoint(touch.clientX, touch.clientY); if(el && el.classList.contains('gem-btn')) overDrag(parseInt(el.getAttribute('data-r')), parseInt(el.getAttribute('data-c'))); }; for(let r = 0; r < 5; r++) { bonanzaGridData[r] = []; for(let c = 0; c < 5; c++) { const val = bonanzaGemValues[Math.floor(Math.random() * bonanzaGemValues.length)]; bonanzaGridData[r][c] = val; const gemBtn = document.createElement('button'); gemBtn.id = `gem-${r}-${c}`; gemBtn.setAttribute('data-r', r); gemBtn.setAttribute('data-c', c); gemBtn.className = `gem-btn w-12 h-12 md:w-14 md:h-14 rounded-2xl font-black text-2xl transition-all cursor-pointer flex items-center justify-center shadow-md ${bonanzaColors[val]}`; gemBtn.innerText = val; gemBtn.onmousedown = (e) => { e.preventDefault(); startDrag(r, c); }; gemBtn.onmouseenter = (e) => { overDrag(r, c); }; gemBtn.ontouchstart = (e) => { e.preventDefault(); startDrag(r, c); }; gridContainer.appendChild(gemBtn); } } }
+        const originalGenerateBonanzaGrid = generateBonanzaGrid;
+        generateBonanzaGrid = function() { originalGenerateBonanzaGrid(); document.querySelectorAll('#bonanza-grid .gem-btn').forEach(button => { const row = parseInt(button.dataset.r), col = parseInt(button.dataset.c); button.setAttribute('aria-label', `第 ${row + 1} 列、第 ${col + 1} 格，數值 ${button.innerText}`); button.addEventListener('click', event => { if (event.detail === 0) selectBonanzaGem(row, col); }); button.addEventListener('keydown', event => { if (event.key === 'Enter' || event.key === ' ') { event.preventDefault(); selectBonanzaGem(row, col); } }); }); };
+        function selectBonanzaGem(row, col) { if (!isGameRunning) return; if (selectedGems.length === 0 || selectedGems.length >= 3) { startDrag(row, col); return; } const lastGem = selectedGems[selectedGems.length - 1]; if (Math.abs(lastGem.r - row) + Math.abs(lastGem.c - col) === 1) overDrag(row, col); else startDrag(row, col); }
         function shuffleBonanzaGrid() { if(!isGameRunning) return; selectedGems = []; updateSlots(); generateBonanzaGrid(); generateNewTarget(); }
         function getNeighbors(r, c) { let n = []; if (r > 0) n.push({r: r-1, c: c}); if (r < 4) n.push({r: r+1, c: c}); if (c > 0) n.push({r: r, c: c-1}); if (c < 4) n.push({r: r, c: c+1}); return n; }
         function generateNewTarget() { let r1 = Math.floor(Math.random() * 5), c1 = Math.floor(Math.random() * 5); let neighbors1 = getNeighbors(r1, c1); let next1 = neighbors1[Math.floor(Math.random() * neighbors1.length)]; let r2 = next1.r, c2 = next1.c; let neighbors2 = getNeighbors(r2, c2).filter(n => !(n.r === r1 && n.c === c1)); let next2 = neighbors2[Math.floor(Math.random() * neighbors2.length)]; let r3 = next2.r, c3 = next2.c; bonanzaTarget = bonanzaGridData[r1][c1]*8 + bonanzaGridData[r2][c2]*4 + bonanzaGridData[r3][c3]*1; const targetEl = document.getElementById('game-target'); if (targetEl) { targetEl.innerText = bonanzaTarget; targetEl.classList.remove('scale-110', 'border-blue-500'); } }
@@ -206,10 +206,7 @@
         const originalSubmitQuizAnswer = submitQuizAnswer;
         submitQuizAnswer = function() { const expected = quizType === 'd2b' ? quizTargetNum.toString(2).padStart(5, '0') : quizTargetNum; const answer = quizType === 'd2b' ? d2bBits.join('') : (b2dDigits[0] * 10 + b2dDigits[1]); originalSubmitQuizAnswer(); const feedback = document.getElementById('quiz-feedback'); if (feedback && answer !== expected) { const selected = quizType === 'd2b' ? d2bBits.reduce((sum, bit, index) => sum + bit * [16, 8, 4, 2, 1][index], 0) : answer; const diff = quizTargetNum - selected; feedback.innerText = diff > 0 ? `❌ 還差 ${diff}；檢查是否漏開了對應權值。` : `❌ 超過 ${Math.abs(diff)}；關掉一個較大的權值再試試。`; } else if (feedback) feedback.innerText = '✅ 答對了！你已正確使用位元的權值。進入下一題…'; };
 
-        const reviewPassed = new Set();
-        function answerReview(question, isCorrect, button, hint = '') { const feedback = document.getElementById('review-feedback'); const score = document.getElementById('review-score'); if (!feedback || !score) return; if (isCorrect) { reviewPassed.add(question); button.className = 'review-btn bg-emerald-500 text-white border-emerald-600'; feedback.innerText = `✅ 第 ${question} 題答對了！`; } else { button.className = 'review-btn bg-rose-100 text-rose-700 border-rose-300'; feedback.innerText = `💡 ${hint}`; } score.innerText = `${reviewPassed.size} / 3`; if (reviewPassed.size === 3) document.getElementById('review-badge')?.classList.remove('hidden'); }
 
-        function chooseDiscussion(choice, button) { document.querySelectorAll('.discussion-btn').forEach(item => item.classList.remove('is-selected')); button.classList.add('is-selected'); const feedback = document.getElementById('discussion-feedback'); if (feedback) feedback.innerText = `你選擇「${choice}」。接著和同伴輪流完成：「我選這個，因為……」與「我同意／我有不同想法，因為……」。`; }
 
         window.onload = function() {
             initBinaryGame(); 
@@ -217,5 +214,7 @@
             initNewQuiz('d2b');
         };
     </script>
+    <script src="course-data.js"></script>
+    <script src="course-core.js"></script>
 </body>
 </html>

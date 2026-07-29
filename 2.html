@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>0與1的藝術 - 單元二</title>
     <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="course-components.css">
     <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;700;900&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
     <style>
         body { font-family: 'Noto Sans TC', sans-serif; background: linear-gradient(135deg, #f0f9ff 0%, #e0f2fe 100%); color: #1e293b; min-height: 100vh; margin: 0; display: flex; flex-direction: column; }
@@ -25,13 +26,9 @@
         .custom-scrollbar::-webkit-scrollbar-thumb:hover { background: #94a3b8; }
         @keyframes fadeUp { from { opacity: 0; transform: translateY(15px); } to { opacity: 1; transform: translateY(0); } }
         .animate-fade-up { animation: fadeUp 0.5s cubic-bezier(0.2, 0.8, 0.2, 1) forwards; }
-        .review-btn { display: inline-flex; flex: 1; justify-content: center; border: 1px solid #cbd5e1; border-radius: .6rem; padding: .45rem .6rem; font-weight: 700; font-size: .8rem; color: #475569; background: #fff; transition: .2s; }
-        .review-btn:hover { background: #eef2ff; }
-        .discussion-btn { border: 1px solid #c7d2fe; border-radius: .75rem; padding: .7rem 1rem; font-weight: 700; font-size: .875rem; color: #3730a3; background: #eef2ff; text-align: left; transition: .2s; }
-        .discussion-btn:hover, .discussion-btn.is-selected { color: #fff; background: #4f46e5; border-color: #4f46e5; }
     </style>
 </head>
-<body class="theme-indigo p-4 md:p-8 relative">
+<body class="theme-indigo p-4 md:p-8 relative" data-unit="2">
     <div class="fixed top-[-10%] left-[-5%] w-96 h-96 bg-blue-200/40 rounded-full mix-blend-multiply filter blur-3xl opacity-70 -z-10"></div>
     <div class="fixed top-[20%] right-[-5%] w-72 h-72 bg-purple-200/40 rounded-full mix-blend-multiply filter blur-3xl opacity-70 -z-10" style="animation-delay: 2s;"></div>
 
@@ -239,8 +236,6 @@
         checkDecryption = function(isTimeout = false) { originalCheckDecryption(isTimeout); if (isTimeout || document.getElementById('decrypt-input')?.disabled) document.getElementById('morse-timer-display')?.classList.add('hidden'); };
         const originalCheckSendChallenge = checkSendChallenge;
         checkSendChallenge = function(isTimeout = false) { originalCheckSendChallenge(isTimeout); if (isTimeout || document.getElementById('send-input')?.disabled) document.getElementById('send-timer-display')?.classList.add('hidden'); };
-        const reviewPassed = new Set();
-        function answerReview(question, isCorrect, button, hint = '') { const feedback = document.getElementById('review-feedback'); const score = document.getElementById('review-score'); if (!feedback || !score) return; if (isCorrect) { reviewPassed.add(question); button.className = 'review-btn bg-emerald-500 text-white border-emerald-600'; feedback.innerText = `✅ 第 ${question} 題答對了！`; } else { button.className = 'review-btn bg-rose-100 text-rose-700 border-rose-300'; feedback.innerText = `💡 ${hint}`; } score.innerText = `${reviewPassed.size} / 3`; if (reviewPassed.size === 3) document.getElementById('review-badge')?.classList.remove('hidden'); }
         
         function playTelegraphSound() { try { if (!audioCtx) audioCtx = new (window.AudioContext || window.webkitAudioContext)(); if (audioCtx.state === 'suspended') audioCtx.resume(); oscillator = audioCtx.createOscillator(); gainNode = audioCtx.createGain(); oscillator.type = 'sine'; oscillator.frequency.value = 750; gainNode.gain.setValueAtTime(0.05, audioCtx.currentTime); oscillator.connect(gainNode); gainNode.connect(audioCtx.destination); oscillator.start(); } catch (e) {} }
         function stopTelegraphSound() { if (oscillator) { oscillator.stop(); oscillator.disconnect(); oscillator = null; } }
@@ -248,7 +243,6 @@
         function convertText() { const inputEl = document.getElementById('text-input'); if (!inputEl) return; if(inputEl.value.length === 0) { if (document.getElementById('ascii-result')) document.getElementById('ascii-result').innerText = "0"; if (document.getElementById('binary-text-result')) document.getElementById('binary-text-result').innerText = "00000000"; return; } const asciiCode = inputEl.value.charAt(0).charCodeAt(0); if (document.getElementById('ascii-result')) document.getElementById('ascii-result').innerText = asciiCode; if (document.getElementById('binary-text-result')) document.getElementById('binary-text-result').innerText = asciiCode.toString(2).padStart(8, '0'); }
         function runMultiCodec() { const txt = document.getElementById('cipher-input-text') ? document.getElementById('cipher-input-text').value : ''; if (!txt) { if (document.getElementById('codec-ascii-bin')) document.getElementById('codec-ascii-bin').innerText = "無輸入"; if (document.getElementById('codec-ascii-size')) document.getElementById('codec-ascii-size').innerText = "0 Bytes"; if (document.getElementById('codec-big5-bin')) document.getElementById('codec-big5-bin').innerText = "無輸入"; if (document.getElementById('codec-big5-size')) document.getElementById('codec-big5-size').innerText = "0 Bytes"; if (document.getElementById('codec-utf8-bin')) document.getElementById('codec-utf8-bin').innerText = "無輸入"; if (document.getElementById('codec-utf8-size')) document.getElementById('codec-utf8-size').innerText = "0 Bytes"; return; } let asciiValid = true, asciiBytes = []; for (let i = 0; i < txt.length; i++) { const code = txt.charCodeAt(i); if (code > 127) asciiValid = false; asciiBytes.push(code.toString(2).padStart(8, '0')); } if (asciiValid) { if (document.getElementById('codec-ascii-bin')) { document.getElementById('codec-ascii-bin').innerText = asciiBytes.join(' '); document.getElementById('codec-ascii-bin').classList.remove('text-rose-500'); } if (document.getElementById('codec-ascii-size')) document.getElementById('codec-ascii-size').innerText = `${txt.length} Byte(s)`; } else { if (document.getElementById('codec-ascii-bin')) { document.getElementById('codec-ascii-bin').innerText = "⚠️ 包含不支援之中文或特殊符號"; document.getElementById('codec-ascii-bin').classList.add('text-rose-500'); } if (document.getElementById('codec-ascii-size')) document.getElementById('codec-ascii-size').innerText = "無法編碼"; } let big5Size = 0, big5FakeBin = []; for (let i = 0; i < txt.length; i++) { const code = txt.charCodeAt(i); if (code > 127) { big5Size += 2; big5FakeBin.push("11010110 10100101"); } else { big5Size += 1; big5FakeBin.push(code.toString(2).padStart(8, '0')); } } if (document.getElementById('codec-big5-bin')) document.getElementById('codec-big5-bin').innerText = big5FakeBin.join(' '); if (document.getElementById('codec-big5-size')) document.getElementById('codec-big5-size').innerText = `${big5Size} Byte(s)`; let utf8Size = 0, utf8BinArr = []; for (let i = 0; i < txt.length; i++) { const code = txt.charCodeAt(i); if (code > 0x7FF) { utf8Size += 3; utf8BinArr.push("1110xxxx 10xxxxxx 10xxxxxx"); } else if (code > 127) { utf8Size += 2; utf8BinArr.push("110xxxxx 10xxxxxx"); } else { utf8Size += 1; utf8BinArr.push(code.toString(2).padStart(8, '0')); } } if (document.getElementById('codec-utf8-bin')) document.getElementById('codec-utf8-bin').innerText = utf8BinArr.join(' '); if (document.getElementById('codec-utf8-size')) document.getElementById('codec-utf8-size').innerText = `${utf8Size} Byte(s)`; }
 
-        function chooseDiscussion(choice, button) { document.querySelectorAll('.discussion-btn').forEach(item => item.classList.remove('is-selected')); button.classList.add('is-selected'); const feedback = document.getElementById('discussion-feedback'); if (feedback) feedback.innerText = `你選擇「${choice}」。接著和同伴輪流完成：「我選這個，因為……」與「我同意／我有不同想法，因為……」。`; }
 
         window.onload = function() {
             initMorseTable();
@@ -272,5 +266,7 @@
             }
         };
     </script>
+    <script src="course-data.js"></script>
+    <script src="course-core.js"></script>
 </body>
 </html>
