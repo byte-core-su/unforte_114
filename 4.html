@@ -80,6 +80,8 @@
         #img-game-overlay { backdrop-filter: blur(6px); -webkit-backdrop-filter: blur(6px); }
         .review-btn { display: inline-flex; flex: 1; justify-content: center; border: 1px solid #cbd5e1; border-radius: .6rem; padding: .45rem .6rem; font-weight: 700; font-size: .8rem; color: #475569; background: #fff; transition: .2s; }
         .review-btn:hover { background: #fff1f2; }
+        .discussion-btn { border: 1px solid #fecdd3; border-radius: .75rem; padding: .7rem 1rem; font-weight: 700; font-size: .875rem; color: #9f1239; background: #fff1f2; text-align: left; transition: .2s; }
+        .discussion-btn:hover, .discussion-btn.is-selected { color: #fff; background: #e11d48; border-color: #e11d48; }
     </style>
 </head>
 <body class="theme-rose p-4 md:p-8 relative">
@@ -707,6 +709,7 @@
                 </div>
 
                 <section class="mt-10 rounded-3xl border border-rose-100 bg-gradient-to-r from-rose-50 to-orange-50 p-6 md:p-8" aria-labelledby="unit-four-review"><div class="flex flex-col gap-4 md:flex-row md:items-center md:justify-between"><div><p class="text-xs font-black tracking-[0.18em] text-rose-600">WRAP-UP</p><h3 id="unit-four-review" class="mt-1 text-xl font-black text-slate-800">課後回顧：一張圖片如何變成資料？</h3></div><a href="index.html" class="nav-btn nav-inactive w-fit px-4 py-2 text-sm font-bold">回到課程地圖</a></div><div class="mt-5 grid gap-3 md:grid-cols-3 text-sm text-slate-600"><p class="rounded-2xl bg-white/80 p-4">我能區分：解析度、色彩深度與檔案大小並不相同。</p><p class="rounded-2xl bg-white/80 p-4">我能說明：降低色彩或尺寸為何能減少檔案容量。</p><p class="rounded-2xl bg-white/80 p-4">我能選擇：依透明背景、照片或動畫挑選圖片格式。</p></div><div class="mt-6 rounded-2xl border border-rose-100 bg-white/80 p-5"><div class="flex items-center justify-between gap-3"><div><h4 class="font-black text-slate-800">快速檢核</h4><p class="text-xs text-slate-500">答對三題，取得本單元徽章。</p></div><span id="review-score" class="rounded-full bg-rose-100 px-3 py-1 text-xs font-black text-rose-700">0 / 3</span></div><div class="mt-4 grid gap-3 md:grid-cols-3 text-sm"><article class="rounded-xl border border-slate-100 p-3"><p class="font-bold text-slate-700">1. 透明背景的圖示優先選？</p><div class="mt-2 flex gap-2"><button onclick="answerReview(1, false, this, 'JPG 不支援透明背景；需要透明效果時選 PNG。')" class="review-btn">JPG</button><button onclick="answerReview(1, true, this)" class="review-btn">PNG</button></div></article><article class="rounded-xl border border-slate-100 p-3"><p class="font-bold text-slate-700">2. 想讓照片檔案較小可優先選？</p><div class="mt-2 flex gap-2"><button onclick="answerReview(2, true, this)" class="review-btn">JPG</button><button onclick="answerReview(2, false, this, 'PNG 適合線條與透明圖；照片通常選 JPG 更省容量。')" class="review-btn">PNG</button></div></article><article class="rounded-xl border border-slate-100 p-3"><p class="font-bold text-slate-700">3. 降低解析度通常會？</p><div class="mt-2 flex gap-2"><button onclick="answerReview(3, false, this, '解析度較低時，像素變少，檔案通常會變小。')" class="review-btn">檔案更大</button><button onclick="answerReview(3, true, this)" class="review-btn">像素與容量變少</button></div></article></div><p id="review-feedback" class="mt-3 min-h-5 text-sm font-bold text-rose-700" aria-live="polite">從三題中找出你最需要再練習的概念。</p><div id="review-badge" class="mt-3 hidden rounded-xl bg-rose-600 px-4 py-3 text-center text-sm font-black text-white">🏅 圖像資料判讀員徽章已解鎖！</div></div></section>
+                <section class="mt-5 rounded-2xl border border-rose-100 bg-white p-5" aria-labelledby="unit-four-discussion"><div class="flex flex-col gap-2 md:flex-row md:items-center md:justify-between"><div><p class="text-xs font-black tracking-[0.16em] text-rose-600">PAIR TALK</p><h3 id="unit-four-discussion" class="text-lg font-black text-slate-800">同伴討論挑戰</h3></div><span class="text-xs font-bold text-slate-500">先選擇，再說明理由</span></div><p class="mt-3 text-sm text-slate-600">要製作透明背景的社團 Logo 並放上網站，你會怎麼選？</p><div class="mt-3 grid gap-2 sm:grid-cols-2"><button onclick="chooseDiscussion('PNG，保留透明背景與清楚邊緣', this)" class="discussion-btn">PNG：保留透明背景與清楚邊緣</button><button onclick="chooseDiscussion('JPG，把照片壓縮得更小', this)" class="discussion-btn">JPG：把照片壓縮得更小</button></div><p id="discussion-feedback" class="mt-3 min-h-5 text-sm font-bold text-rose-700" aria-live="polite">選擇後，和同伴用「我選……因為……」說明你的理由。</p></section>
             </section>
         </main>
         
@@ -1824,6 +1827,8 @@
         // ==========================================
         // 頁面初始化載入
         // ==========================================
+        function chooseDiscussion(choice, button) { document.querySelectorAll('.discussion-btn').forEach(item => item.classList.remove('is-selected')); button.classList.add('is-selected'); const feedback = document.getElementById('discussion-feedback'); if (feedback) feedback.innerText = `你選擇「${choice}」。接著和同伴輪流完成：「我選這個，因為……」與「我同意／我有不同想法，因為……」。`; }
+
         window.onload = function() {
             switchImageSubTab('intro'); 
             
