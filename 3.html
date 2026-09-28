@@ -24,7 +24,8 @@
         .video-wrapper { position: relative; width: 100%; overflow: hidden; background: #000; border-radius: 1rem; }
         /* 保留右下角點擊通道，讓 YouTube 可略過的廣告按鈕仍能操作。 */
         .sniper-mask { position: absolute; inset: 0; background: #000; z-index: 20; pointer-events: auto; cursor: pointer; mask-image: radial-gradient(circle 35px at calc(100% - 85px) calc(100% - 55px), transparent 35px, black 35px); -webkit-mask-image: radial-gradient(circle 35px at calc(100% - 85px) calc(100% - 55px), transparent 35px, black 35px); clip-path: polygon(0% 0%, 100% 0%, 100% 100%, 0% 100%, 0% 0%, calc(100% - 85px) 0%, calc(100% - 120px) calc(100% - 90px), calc(100% - 120px) calc(100% - 20px), calc(100% - 50px) calc(100% - 20px), calc(100% - 50px) calc(100% - 90px), calc(100% - 120px) calc(100% - 90px), calc(100% - 85px) 0%); }
-        .full-mask { position: absolute; inset: 0; background: #000; z-index: 20; pointer-events: auto; cursor: pointer; }
+        .skip-ad-hint { display: none; position: absolute; right: 133px; bottom: 41px; z-index: 21; padding: 3px 8px; border-radius: 999px; background: rgba(15, 23, 42, .86); color: rgba(255, 255, 255, .85); font-size: 11px; line-height: 1.4; white-space: nowrap; pointer-events: none; }
+        .sniper-mask:not(.hidden) + .skip-ad-hint { display: block; }
         @keyframes fadeUp { from { opacity: 0; transform: translateY(15px); } to { opacity: 1; transform: translateY(0); } }
         .animate-fade-up { animation: fadeUp 0.5s cubic-bezier(0.2, 0.8, 0.2, 1) forwards; }
     </style>
@@ -162,12 +163,13 @@
                     <div class="bg-white border border-slate-200 rounded-3xl p-6 shadow-sm">
                         <h4 class="text-lg font-bold text-slate-800 mb-4 flex items-center gap-2"><span class="text-rose-500">▶️</span> 聽音辨位：場景盲測</h4>
                         <div class="max-w-2xl mx-auto">
+                            <p class="text-xs text-slate-600 mb-3 leading-relaxed">開始前提醒：若影片出現廣告，請點右下角圓孔中的「略過廣告」，再專心聽聲音。</p>
                             <div class="flex gap-2 mb-4">
                                 <button class="scene-btn flex-1 bg-indigo-100 hover:bg-indigo-200 text-indigo-700 px-2 py-2.5 rounded-xl font-bold text-sm transition-transform active:scale-95" data-url="https://youtu.be/a7VfRhKN91w?si=BVFqmtUL6gAlxmf0&t=18">場景一</button>
                                 <button class="scene-btn flex-1 bg-indigo-100 hover:bg-indigo-200 text-indigo-700 px-2 py-2.5 rounded-xl font-bold text-sm transition-transform active:scale-95" data-url="https://youtu.be/BytrOCk_U98?si=jOoA0SKFtUAJvlBn&t=43">場景二</button>
                                 <button class="scene-btn flex-1 bg-indigo-100 hover:bg-indigo-200 text-indigo-700 px-2 py-2.5 rounded-xl font-bold text-sm transition-transform active:scale-95" data-url="https://youtu.be/kqR-ibYu4cQ?si=TsLYoIzwpYgJyzD0&t=240">場景三</button>
                             </div>
-                            <div id="videoContainer" class="video-wrapper aspect-video mb-4 shadow-inner border border-slate-200"><div id="yt-player"></div><div id="maskLayer" class="sniper-mask hidden"></div></div>
+                            <div id="videoContainer" class="video-wrapper aspect-video mb-4 shadow-inner border border-slate-200"><div id="yt-player"></div><div id="maskLayer" class="sniper-mask hidden"></div><span class="skip-ad-hint" aria-hidden="true">略過廣告 →</span></div>
                             <div class="grid grid-cols-4 gap-2 mb-2">
                                 <button id="ctrlPlay" class="bg-emerald-500 hover:bg-emerald-400 text-white py-2.5 rounded-xl font-bold text-xs transition-transform active:scale-95 uppercase">Play</button>
                                 <button id="ctrlReload" class="bg-sky-500 hover:bg-sky-400 text-white py-2.5 rounded-xl font-bold text-xs transition-transform active:scale-95 uppercase">Reload</button>
@@ -273,12 +275,12 @@
             const videoContainer = document.getElementById('videoContainer');
             if(!videoContainer) return;
             if (ytPlayerObj && typeof ytPlayerObj.destroy === 'function') ytPlayerObj.destroy();
-            videoContainer.innerHTML = '<div id="yt-player"></div><div id="maskLayer" class="sniper-mask"></div>';
+            videoContainer.innerHTML = '<div id="yt-player"></div><div id="maskLayer" class="sniper-mask"></div><span class="skip-ad-hint" aria-hidden="true">略過廣告 →</span>';
             const newMaskLayer = document.getElementById('maskLayer');
             if(newMaskLayer) bindMaskEvents(newMaskLayer);
             ytPlayerObj = new YT.Player('yt-player', { height: '100%', width: '100%', videoId: info.id, playerVars: { 'autoplay': 1, 'start': info.start, 'rel': 0, 'enablejsapi': 1, 'origin': '*' }, events: { 'onReady': () => { if(statusEl) statusEl.textContent = "Ready to Play（右下角圓孔可按略過廣告）"; } } });
             const ctrlToggle = document.getElementById('ctrlToggle');
-            if(ctrlToggle) ctrlToggle.textContent = "隱藏畫面";
+            if(ctrlToggle) ctrlToggle.textContent = "顯示畫面";
         }
 
         function switchAudioSubTab(subTabName) { 
@@ -344,12 +346,12 @@
                         
                         const currentMask = document.getElementById('maskLayer');
                         if (currentMask) {
-                            currentMask.className = "full-mask";
+                            currentMask.className = "sniper-mask";
                         }
                         const toggleBtn = document.getElementById('ctrlToggle');
                         if(toggleBtn) toggleBtn.textContent = "顯示畫面";
                         const statusEl = document.getElementById('yt-status');
-                        if(statusEl) statusEl.textContent = "Ready to Play (已回到起點並啟用全遮罩)";
+                        if(statusEl) statusEl.textContent = "已回到起點（右下角可略過廣告）";
                     }
                 });
             }
@@ -361,14 +363,14 @@
                     if (!currentMask) return;
                     const statusEl = document.getElementById('yt-status');
 
-                    if (currentMask.classList.contains('full-mask')) {
+                    if (!currentMask.classList.contains('hidden')) {
                         currentMask.className = 'hidden';
                         this.textContent = "隱藏畫面";
                         if(statusEl) statusEl.textContent = "已完全取消遮罩 (顯示完整影片)";
                     } else {
-                        currentMask.className = 'full-mask';
+                        currentMask.className = 'sniper-mask';
                         this.textContent = "顯示畫面";
-                        if(statusEl) statusEl.textContent = "已切換至全遮罩模式 (純音訊播放)";
+                        if(statusEl) statusEl.textContent = "已隱藏畫面（右下角可略過廣告）";
                     }
                 });
             }
