@@ -133,8 +133,9 @@
                         <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
                             <div class="bg-slate-50 p-4 rounded-2xl border border-slate-100 flex flex-col items-center shadow-sm"><canvas id="res-canvas-low" class="w-full aspect-square bg-white rounded-xl shadow-inner border border-slate-200 pixelated-canvas"></canvas><div class="mt-4 text-center"><span class="px-3 py-1 bg-rose-100 text-rose-700 rounded-full text-xs font-bold uppercase tracking-widest">低解析度</span><p class="text-[11px] text-slate-500 mt-2 font-medium">明顯鋸齒，像素方塊極大</p></div></div>
                             <div class="bg-slate-50 p-4 rounded-2xl border border-slate-100 flex flex-col items-center shadow-sm"><canvas id="res-canvas-mid" class="w-full aspect-square bg-white rounded-xl shadow-inner border border-slate-200 pixelated-canvas"></canvas><div class="mt-4 text-center"><span class="px-3 py-1 bg-rose-100 text-rose-700 rounded-full text-xs font-bold uppercase tracking-widest">中解析度</span><p class="text-[11px] text-slate-500 mt-2 font-medium">輪廓漸清晰，邊緣仍可見方塊</p></div></div>
-                        <div class="bg-slate-50 p-4 rounded-2xl border border-slate-100 flex flex-col items-center shadow-sm"><img id="res-img-high" src="images/unit4-1.png" class="w-full h-auto max-h-80 bg-white rounded-xl shadow-inner border border-slate-200 object-contain" crossorigin="anonymous"><div class="mt-4 text-center"><span class="px-3 py-1 bg-rose-500 text-white rounded-full text-xs font-bold uppercase tracking-widest">高解析度 (原圖)</span><p class="text-[11px] text-slate-500 mt-2 font-medium">細膩平滑，幾乎看不出像素點</p></div></div>
+                        <div class="bg-slate-50 p-4 rounded-2xl border border-slate-100 flex flex-col items-center shadow-sm"><img id="res-img-high" src="images/unit4-resolution.webp" alt="小男孩跳躍圖的高解析度版本" class="w-full h-auto max-h-80 bg-white rounded-xl shadow-inner border border-slate-200 object-contain" crossorigin="anonymous"><div class="mt-4 text-center"><span class="px-3 py-1 bg-rose-500 text-white rounded-full text-xs font-bold uppercase tracking-widest">高解析度 (原圖)</span><p class="text-[11px] text-slate-500 mt-2 font-medium">細膩平滑，幾乎看不出像素點</p></div></div>
                         </div>
+                        <p id="res-demo-status" class="mt-3 text-center text-xs text-slate-500" role="status">解析度示範圖載入中…</p>
                     </div>
                     
                     <div class="bg-white border border-slate-200 shadow-sm p-6 md:p-8 rounded-3xl">
@@ -818,6 +819,8 @@
 
             drawToCanvas(canvasLow, 12);  
             drawToCanvas(canvasMid, 32);  
+            const status = document.getElementById('res-demo-status');
+            if (status) status.hidden = true;
         }
 
         // ==========================================
@@ -1858,20 +1861,24 @@
         const reviewPassed = new Set();
         function answerReview(question, isCorrect, button, hint = '') { const feedback = document.getElementById('review-feedback'), score = document.getElementById('review-score'); if (!feedback || !score) return; if (isCorrect) { reviewPassed.add(question); button.className = 'bg-emerald-500 text-white border-emerald-600 rounded px-2 py-1'; feedback.innerText = `✅ 第 ${question} 題答對了！`; } else { feedback.innerText = `💡 ${hint}`; } score.innerText = `${reviewPassed.size} / 3`; if (reviewPassed.size === 3) document.getElementById('review-badge')?.classList.remove('hidden'); }
         function chooseDiscussion(choice, button) { document.querySelectorAll('.discussion-btn').forEach(item => item.classList.remove('is-selected')); button.classList.add('is-selected'); const feedback = document.getElementById('discussion-feedback'); if (feedback) feedback.innerText = `你選擇「${choice}」。接著和同伴輪流完成：「我選這個，因為……」與「我同意／我有不同想法，因為……」。`; }
-        window.onload = function() {
+        window.addEventListener('DOMContentLoaded', function() {
             switchImageSubTab('intro'); 
-            
-            peInitAllLevels();
-            initImageDecodingGame();
-            updateImageStorageCalc(); 
 
             // 處理第一個子分頁 Demo 圖片載入
             const demoImg = document.getElementById('res-img-high');
             if(demoImg) {
-                demoImg.onerror = () => { demoImg.src = createSvgFallback("👦"); };
-                if (demoImg.complete) drawPixelatedDemo();
-                else demoImg.onload = drawPixelatedDemo;
+                demoImg.onload = drawPixelatedDemo;
+                demoImg.onerror = () => {
+                    demoImg.onerror = null;
+                    demoImg.src = createSvgFallback("👦");
+                };
+                if (demoImg.complete && demoImg.naturalWidth > 0) drawPixelatedDemo();
+                else if (demoImg.complete) demoImg.onerror();
             }
+
+            peInitAllLevels();
+            initImageDecodingGame();
+            updateImageStorageCalc();
             
             // 處理第四個子分頁 Demo 圖片載入
             const compImg = document.getElementById('compress-source-img');
@@ -1885,7 +1892,7 @@
                 if(currentImageSubTab === 'intro') { drawPixelatedDemo(); }
                 if(currentImageSubTab === 'explorer') { peDrawPixelated(); }
             });
-        };
+        });
     </script>
     <script src="course-data.js"></script>
     <script src="course-core.js"></script>
