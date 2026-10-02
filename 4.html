@@ -125,17 +125,31 @@
                     <div class="bg-white border border-slate-200 shadow-sm p-6 md:p-8 rounded-3xl">
                         <h3 class="text-xl font-bold text-slate-800 mb-4 flex items-center gap-2"><span class="text-rose-500">🔍</span> 視覺解構：什麼是解析度？</h3>
                         <p class="text-sm text-slate-600 mb-6 leading-relaxed">
-                            <strong class="text-slate-800">視覺觀察：</strong>請觀察下方三種不同解析度的「小男孩跳躍圖」。由左至右，描述它們在視覺上的第一印象差異（從模糊到精細）。<br>
+                            <strong class="text-slate-800">視覺觀察：</strong>下方使用同一位小男孩、相同構圖與顯示大小，只改變像素數量。請由左至右觀察畫面如何從模糊變得精細。<br>
                             你有沒有發現最左邊的圖有一種<strong class="text-rose-600">「一格一格的鋸齒感」</strong>？<br><br>
                             <strong class="text-slate-800">定義像素與取樣：</strong>這種鋸齒感就是<strong class="text-rose-600">「像素化」</strong>現象。這告訴我們，數位影像並不是一幅連續的畫，而是被<strong class="text-rose-600">「切割成數個小方格」</strong>拼湊而成的。這個將連續畫面切割成方格的過程，我們稱為<strong class="text-rose-600">「取樣」</strong>，而每一個方格，就是構成數位影像的基本單位——<strong class="text-rose-600">像素 (Pixel)</strong>。<br>
                             <span class="text-rose-600 font-bold mt-2 inline-block">💡 連結原理：影像越細膩，代表構成畫面的「格子（像素）」數量越多！</span>
                         </p>
                         <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
-                            <div class="bg-slate-50 p-4 rounded-2xl border border-slate-100 flex flex-col items-center shadow-sm"><canvas id="res-canvas-low" class="w-full aspect-square bg-white rounded-xl shadow-inner border border-slate-200 pixelated-canvas"></canvas><div class="mt-4 text-center"><span class="px-3 py-1 bg-rose-100 text-rose-700 rounded-full text-xs font-bold uppercase tracking-widest">低解析度</span><p class="text-[11px] text-slate-500 mt-2 font-medium">明顯鋸齒，像素方塊極大</p></div></div>
-                            <div class="bg-slate-50 p-4 rounded-2xl border border-slate-100 flex flex-col items-center shadow-sm"><canvas id="res-canvas-mid" class="w-full aspect-square bg-white rounded-xl shadow-inner border border-slate-200 pixelated-canvas"></canvas><div class="mt-4 text-center"><span class="px-3 py-1 bg-rose-100 text-rose-700 rounded-full text-xs font-bold uppercase tracking-widest">中解析度</span><p class="text-[11px] text-slate-500 mt-2 font-medium">輪廓漸清晰，邊緣仍可見方塊</p></div></div>
-                        <div class="bg-slate-50 p-4 rounded-2xl border border-slate-100 flex flex-col items-center shadow-sm"><img id="res-img-high" src="images/unit4-resolution.webp" alt="小男孩跳躍圖的高解析度版本" class="w-full h-auto max-h-80 bg-white rounded-xl shadow-inner border border-slate-200 object-contain" crossorigin="anonymous"><div class="mt-4 text-center"><span class="px-3 py-1 bg-rose-500 text-white rounded-full text-xs font-bold uppercase tracking-widest">高解析度 (原圖)</span><p class="text-[11px] text-slate-500 mt-2 font-medium">細膩平滑，幾乎看不出像素點</p></div></div>
+                            <div class="bg-slate-50 p-4 rounded-2xl border border-slate-100 flex flex-col items-center shadow-sm"><canvas id="res-canvas-low" width="300" height="300" role="img" aria-label="同一位小男孩的低解析度圖，12乘12像素" class="w-full aspect-square bg-white rounded-xl shadow-inner border border-slate-200 pixelated-canvas"></canvas><div class="mt-4 text-center"><span class="px-3 py-1 bg-rose-100 text-rose-700 rounded-full text-xs font-bold uppercase tracking-widest">低解析度</span><p class="text-[11px] text-slate-500 mt-2 font-medium">12 × 12 像素：方塊與鋸齒明顯</p></div></div>
+                            <div class="bg-slate-50 p-4 rounded-2xl border border-slate-100 flex flex-col items-center shadow-sm"><canvas id="res-canvas-mid" width="300" height="300" role="img" aria-label="同一位小男孩的中解析度圖，32乘32像素" class="w-full aspect-square bg-white rounded-xl shadow-inner border border-slate-200 pixelated-canvas"></canvas><div class="mt-4 text-center"><span class="px-3 py-1 bg-rose-100 text-rose-700 rounded-full text-xs font-bold uppercase tracking-widest">中解析度</span><p class="text-[11px] text-slate-500 mt-2 font-medium">32 × 32 像素：輪廓漸漸清楚</p></div></div>
+                            <div class="bg-slate-50 p-4 rounded-2xl border border-slate-100 flex flex-col items-center shadow-sm"><img id="res-img-high" src="images/unit4-resolution-boy.webp" width="768" height="768" alt="同一位小男孩的高解析度圖，768乘768像素" class="w-full aspect-square bg-white rounded-xl shadow-inner border border-slate-200 object-contain" crossorigin="anonymous"><div class="mt-4 text-center"><span class="px-3 py-1 bg-rose-500 text-white rounded-full text-xs font-bold uppercase tracking-widest">高解析度</span><p class="text-[11px] text-slate-500 mt-2 font-medium">768 × 768 像素：細節與邊緣更細膩</p></div></div>
                         </div>
                         <p id="res-demo-status" class="mt-3 text-center text-xs text-slate-500" role="status">解析度示範圖載入中…</p>
+                        <div class="mt-6 rounded-2xl border border-rose-100 bg-rose-50/70 p-4 md:p-5">
+                            <h4 class="font-bold text-rose-800">觀察任務：先判斷，再看解說</h4>
+                            <p class="mt-1 text-xs text-slate-600">先選出你的想法，和同伴說明理由，再展開解說確認。</p>
+                            <div class="mt-4 grid gap-4 md:grid-cols-2">
+                                <article class="rounded-xl bg-white p-4">
+                                    <fieldset><legend class="text-sm font-bold text-slate-800">1. 哪張圖的邊緣最像一格一格的小方塊？</legend><div class="mt-3 flex flex-wrap gap-3 text-sm text-slate-600"><label class="flex items-center gap-1.5"><input type="radio" name="resolution-observation-edge" value="low" class="accent-rose-500">低解析度</label><label class="flex items-center gap-1.5"><input type="radio" name="resolution-observation-edge" value="mid" class="accent-rose-500">中解析度</label><label class="flex items-center gap-1.5"><input type="radio" name="resolution-observation-edge" value="high" class="accent-rose-500">高解析度</label></div></fieldset>
+                                    <details class="mt-3 text-sm"><summary class="cursor-pointer font-bold text-rose-700">查看解說</summary><p class="mt-2 leading-relaxed text-slate-600">低解析度只有 12 × 12 個像素。以相同大小顯示時，每個像素佔的面積最大，因此邊緣最容易看出方塊。比較帽子與鞋子的輪廓，會更明顯。</p></details>
+                                </article>
+                                <article class="rounded-xl bg-white p-4">
+                                    <fieldset><legend class="text-sm font-bold text-slate-800">2. 把低解析度圖放大，就能補回原本沒有的細節嗎？</legend><div class="mt-3 flex gap-4 text-sm text-slate-600"><label class="flex items-center gap-1.5"><input type="radio" name="resolution-observation-detail" value="yes" class="accent-rose-500">能補回</label><label class="flex items-center gap-1.5"><input type="radio" name="resolution-observation-detail" value="no" class="accent-rose-500">不能補回</label></div></fieldset>
+                                    <details class="mt-3 text-sm"><summary class="cursor-pointer font-bold text-rose-700">查看解說</summary><p class="mt-2 leading-relaxed text-slate-600">一般放大只能把已有的像素放大，或估算中間的顏色，無法還原原本沒有記錄的真實細節。畫面變大，不等於取得更多影像資訊。</p></details>
+                                </article>
+                            </div>
+                        </div>
                     </div>
                     
                     <div class="bg-white border border-slate-200 shadow-sm p-6 md:p-8 rounded-3xl">
@@ -282,7 +296,7 @@
 
                             <div class="w-full md:w-1/2 flex justify-center items-center">
                                 <div class="relative w-full max-w-[320px] aspect-square bg-slate-50 p-3 rounded-2xl border border-slate-200 shadow-inner">
-                                    <img id="pe-source-image1" src="" alt="Source Image" class="hidden" crossorigin="anonymous">
+                                    <img id="pe-source-image1" alt="Source Image" class="hidden" crossorigin="anonymous">
                                     <canvas id="pe-pixel-canvas" class="w-full h-full object-cover rounded-xl"></canvas>
                                 </div>
                             </div>
@@ -302,7 +316,7 @@
                             <div class="flex-1 flex flex-col items-center bg-slate-50 p-4 rounded-2xl border border-slate-200">
                                 <h4 class="font-bold text-sm mb-3 text-rose-500 bg-rose-50 px-3 py-1 rounded-full border border-rose-100">低解析度 (像素少)</h4>
                                 <div class="w-full max-w-[280px] bg-white p-2 rounded-xl relative pe-magnifier-container shadow-sm border border-slate-200" id="pe-mag-container-low">
-                                    <img id="pe-img-low-res" src="" alt="Low Res" class="w-full h-auto rounded-lg" style="image-rendering: pixelated;" crossorigin="anonymous">
+                                    <img id="pe-img-low-res" alt="Low Res" class="w-full h-auto rounded-lg" style="image-rendering: pixelated;" crossorigin="anonymous">
                                     <div class="pe-magnifier-lens border-rose-400 shadow-[0_0_0_3px_#fb7185,0_8px_20px_rgba(0,0,0,0.4)]" id="pe-lens-low"></div>
                                 </div>
                                 <p id="pe-l2-desc-low" class="mt-4 text-xs text-slate-500 leading-relaxed text-center px-4 h-10">載入中...</p>
@@ -312,7 +326,7 @@
                             <div class="flex-1 flex flex-col items-center bg-slate-50 p-4 rounded-2xl border border-slate-200">
                                 <h4 class="font-bold text-sm mb-3 text-emerald-600 bg-emerald-50 px-3 py-1 rounded-full border border-emerald-100">高解析度 (像素多)</h4>
                                 <div class="w-full max-w-[280px] bg-white p-2 rounded-xl relative pe-magnifier-container shadow-sm border border-slate-200" id="pe-mag-container-high">
-                                    <img id="pe-img-high-res" src="" alt="High Res" class="w-full h-auto rounded-lg" crossorigin="anonymous">
+                                    <img id="pe-img-high-res" alt="High Res" class="w-full h-auto rounded-lg" crossorigin="anonymous">
                                     <div class="pe-magnifier-lens border-emerald-400 shadow-[0_0_0_3px_#34d399,0_8px_20px_rgba(0,0,0,0.4)]" id="pe-lens-high"></div>
                                 </div>
                                 <p id="pe-l2-desc-high" class="mt-4 text-xs text-slate-500 leading-relaxed text-center px-4 h-10">載入中...</p>
@@ -464,7 +478,7 @@
                             <h3 class="text-xl font-bold text-indigo-800 mb-3 flex items-center gap-2"><span>🎨</span> 色彩量化 (Quantization)：決定顏色的精細度</h3>
                             <p class="text-slate-700 font-medium mb-4 leading-relaxed">決定每個格子可以塗上什麼顏色。這個決定顏色『精細度』的過程，就叫做<strong>量化 (Quantization)</strong>。<br><span class="text-indigo-600 font-bold">量化的位元 (bits) 數越高，顏色就越豐富、越真實，但佔用的記憶體空間也會越高。</span></p>
                             <div class="flex flex-col lg:flex-row gap-6 items-center bg-white p-5 rounded-xl shadow-inner mb-4">
-                                <div class="w-full lg:w-1/2 flex justify-center"><img src="images/unit4-2.png" alt="1-bit, 8-bits, 24-bits 比較圖" class="max-w-full h-auto rounded-lg shadow-sm border border-slate-200"></div>
+                                <div class="w-full lg:w-1/2 flex justify-center"><img data-src="images/unit4-quantization.webp" width="1400" height="544" alt="黑白1位元、灰階8位元、彩色8位元與全彩24位元比較圖" class="max-w-full h-auto rounded-lg shadow-sm border border-slate-200"></div>
                                 <div class="w-full lg:w-1/2 space-y-4">
                                     <div class="border-l-4 border-slate-400 pl-3"><h4 class="font-bold text-slate-800">【1-bit：非黑即白的世界】</h4><p class="text-sm text-slate-600 mt-1">「請看最左邊的小娃。這裡我們只給電腦 1 bit 的空間，也就是 2<sup>1</sup> = 2 種選擇。電腦只能在『黑』與『白』之間二選一。雖然你看得出這是一個小男孩，但所有的陰影、皮膚色、衣服顏色全部都消失了，只剩下輪廓。」</p></div>
                                     <div class="border-l-4 border-blue-400 pl-3"><h4 class="font-bold text-slate-800">【8-bits：復古的 256 色】</h4><p class="text-sm text-slate-600 mt-1">「中間的小娃進步了，我們給它 8 bits，2<sup>8</sup> = 256 種顏色。大家可以發現顏色變豐富了，有膚色、有藍色衣服。但仔細看（指向陰影處），顏色的過渡看起來一塊一塊的，不夠自然。這就像是只有 24 色的彩色筆，想畫出細膩的日落會有點困難。」</p></div>
@@ -675,7 +689,7 @@
                             <!-- 影像展示區 -->
                             <div class="w-full lg:w-1/2 flex flex-col items-center">
                                 <div class="relative w-full max-w-[250px] aspect-square bg-white p-2 rounded-xl shadow-md border border-slate-200">
-                                    <img id="compress-source-img" src="images/compress-dog.jpg" alt="Cute Dog" class="hidden" crossorigin="anonymous">
+                                    <img id="compress-source-img" data-src="images/compress-dog.jpg" alt="Cute Dog" class="hidden" crossorigin="anonymous">
                                     <canvas id="compress-canvas" class="w-full h-full object-cover rounded-lg"></canvas>
                                 </div>
                                 <div class="mt-4 w-full max-w-[250px]">
@@ -720,6 +734,26 @@
         // 全域變數與子頁籤邏輯
         // ==========================================
         let currentImageSubTab = 'intro';
+        const initializedImageSubTabs = new Set();
+
+        function prepareImageSubTab(subTabName) {
+            if (initializedImageSubTabs.has(subTabName)) return;
+            initializedImageSubTabs.add(subTabName);
+            if (subTabName === 'explorer') peInitAllLevels();
+            if (subTabName === 'pixel') initImageDecodingGame();
+            if (subTabName === 'compress') {
+                const img = document.getElementById('compress-source-img');
+                img.onload = () => renderCompressDemo('raw');
+                img.onerror = () => {
+                    img.onerror = null;
+                    img.src = createSvgFallback('🐶');
+                };
+            }
+            document.querySelectorAll(`#image-sub-${subTabName} img[data-src]`).forEach(img => {
+                img.src = img.dataset.src;
+                img.removeAttribute('data-src');
+            });
+        }
 
         // 彈出式對話框控制
         function showCustomModal(title, msg, onOk = null) {
@@ -749,6 +783,7 @@
                 }
             });
             currentImageSubTab = subTabName; 
+            prepareImageSubTab(subTabName);
             
             if(subTabName === 'intro') {
                 drawPixelatedDemo();
@@ -1862,8 +1897,6 @@
         function answerReview(question, isCorrect, button, hint = '') { const feedback = document.getElementById('review-feedback'), score = document.getElementById('review-score'); if (!feedback || !score) return; if (isCorrect) { reviewPassed.add(question); button.className = 'bg-emerald-500 text-white border-emerald-600 rounded px-2 py-1'; feedback.innerText = `✅ 第 ${question} 題答對了！`; } else { feedback.innerText = `💡 ${hint}`; } score.innerText = `${reviewPassed.size} / 3`; if (reviewPassed.size === 3) document.getElementById('review-badge')?.classList.remove('hidden'); }
         function chooseDiscussion(choice, button) { document.querySelectorAll('.discussion-btn').forEach(item => item.classList.remove('is-selected')); button.classList.add('is-selected'); const feedback = document.getElementById('discussion-feedback'); if (feedback) feedback.innerText = `你選擇「${choice}」。接著和同伴輪流完成：「我選這個，因為……」與「我同意／我有不同想法，因為……」。`; }
         window.addEventListener('DOMContentLoaded', function() {
-            switchImageSubTab('intro'); 
-
             // 處理第一個子分頁 Demo 圖片載入
             const demoImg = document.getElementById('res-img-high');
             if(demoImg) {
@@ -1876,17 +1909,8 @@
                 else if (demoImg.complete) demoImg.onerror();
             }
 
-            peInitAllLevels();
-            initImageDecodingGame();
+            switchImageSubTab('intro');
             updateImageStorageCalc();
-            
-            // 處理第四個子分頁 Demo 圖片載入
-            const compImg = document.getElementById('compress-source-img');
-            if (compImg) {
-                compImg.onerror = () => { compImg.src = createSvgFallback("🐶"); };
-                if (compImg.complete) renderCompressDemo('raw');
-                else compImg.onload = () => renderCompressDemo('raw');
-            }
 
             window.addEventListener('resize', () => {
                 if(currentImageSubTab === 'intro') { drawPixelatedDemo(); }
