@@ -10,6 +10,11 @@ window.CourseData = {
     '1': {
       theme: 'blue',
       card: { code: 'BINARY', title: '二進位原理', description: '從位元開始，理解電腦如何用開與關表示數字。' },
+      tasks: {
+        bits: '位元燈泡：拼出 3 個不同的目標數字。',
+        bonanza: 'BINARY BONANZA：一局內拿到 100 分。',
+        convert: '雙向換算：十進位轉二進位、二進位轉十進位，各答對 5 題。'
+      },
       goals: {
         heading: '完成這一單元，你可以……',
         sequence: '建議順序：概念 → 練習 → 挑戰',
@@ -30,6 +35,11 @@ window.CourseData = {
     '2': {
       theme: 'indigo',
       card: { code: 'TEXT', title: '文字數位化', description: '解讀文字編碼，親手傳送與破解摩斯電碼。' },
+      tasks: {
+        listen: '收報員：聽訊號，成功解碼一個單字。',
+        send: '發報員：把一個單字正確轉成摩斯電碼。',
+        codec: '編碼實驗室：輸入一段中英混合文字，比較 ASCII、Big-5 與 UTF-8。'
+      },
       goals: {
         heading: '完成這一單元，你可以……',
         sequence: '建議順序：訊號 → 編碼 → 轉換',
@@ -50,6 +60,11 @@ window.CourseData = {
     '3': {
       theme: 'teal',
       card: { code: 'AUDIO', title: '音訊數位化', description: '看見聲波、取樣與格式如何保存一段聲音。' },
+      tasks: {
+        wave: '聲音三要素：調整響度與音調，並試過 3 種不同音色。',
+        digitize: '取樣與量化：兩個滑桿都調到最小值與最大值，比較波形。',
+        formats: '格式與容量：比較 WAV、MP3、MIDI，再調整錄音時間試算容量。'
+      },
       goals: {
         heading: '完成這一單元，你可以……',
         sequence: '建議順序：波形 → 取樣 → 格式',
@@ -70,6 +85,11 @@ window.CourseData = {
     '4': {
       theme: 'rose',
       card: { code: 'IMAGE', title: '影像數位化', description: '從像素、色彩到壓縮，拆解一張圖片的祕密。' },
+      tasks: {
+        explore: '像素探險家：完成取樣與量化，並與電腦的結果比對。',
+        decode: '色彩解碼：把二進位換成 RGB，解開 3 種不同顏色。',
+        compress: '壓縮實驗室：比較原圖、減少顏色及縮小尺寸三種結果。'
+      },
       goals: {
         heading: '完成這一單元，你可以……',
         sequence: '建議順序：像素 → 色彩 → 壓縮',
