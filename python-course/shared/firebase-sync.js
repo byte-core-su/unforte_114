@@ -1,5 +1,6 @@
 (function(){
   const cfg=window.COURSE115_FIREBASE_CONFIG||{};
+  const studentAccountsEnabled=window.CONFIG?.STUDENT_ACCOUNTS_ENABLED===true;
   let db=null,currentUser=null,fs=null,auth=null,authMod=null;
 
   function configured(){return !!(cfg.enabled&&cfg.apiKey&&!String(cfg.apiKey).startsWith("PASTE_")&&cfg.projectId)}
@@ -15,6 +16,7 @@
     isAnonymous(){return !!currentUser?.isAnonymous},
     accountEmail(className,seatNo){return studentAccountEmail(className,seatNo)},
     async linkStudentAccount(className,seatNo,password){
+      if(!studentAccountsEnabled)throw Error("STUDENT_ACCOUNTS_PAUSED");
       await api.ready;if(!currentUser||!auth||!authMod)throw Error("AUTH_NOT_READY");
       const email=studentAccountEmail(className,seatNo);
       const credential=authMod.EmailAuthProvider.credential(email,password);
@@ -23,6 +25,7 @@
       return {ok:true,uid:currentUser.uid,email};
     },
     async signInStudentAccount(className,seatNo,password){
+      if(!studentAccountsEnabled)throw Error("STUDENT_ACCOUNTS_PAUSED");
       await api.ready;if(!auth||!authMod)throw Error("AUTH_NOT_READY");
       const email=studentAccountEmail(className,seatNo);
       const result=await authMod.signInWithEmailAndPassword(auth,email,password);
@@ -60,7 +63,7 @@
       const app=appMod.getApps().length?appMod.getApp():appMod.initializeApp(cfg);
       authMod=authM;auth=authM.getAuth(app);db=fsMod.getFirestore(app);fs=fsMod;
       await authM.setPersistence(auth,authM.browserLocalPersistence);
-      if(!auth.currentUser&&!force){const cred=await authM.signInAnonymously(auth);currentUser=cred.user}
+      if(!auth.currentUser&&!force&&studentAccountsEnabled){const cred=await authM.signInAnonymously(auth);currentUser=cred.user}
       else currentUser=auth.currentUser;
       api.uid=currentUser?.uid||null;api.state="ready";api.stage="Firebase 已連線";
       return true;

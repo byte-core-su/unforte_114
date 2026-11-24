@@ -7,6 +7,8 @@
    ===================================================================== */
 window.CONFIG = {
   TERM: '11601',
+  // 開放學生建立、綁定與登入學習帳號時改為 true。
+  STUDENT_ACCOUNTS_ENABLED: false,
   //   🔐 驗證伺服器（Google Apps Script 網頁應用程式的網址，…/exec）：答案、判斷、星星都在那裡（見 server/README.md）
   //   在自己電腦（localhost）預覽時一律用本機模擬伺服器（網址加 ?gas=live 才連這個）；留空＝練習模式（不判斷、不記星）
   VERIFY_URL: 'https://script.google.com/macros/s/AKfycbx4uYlffS8uiRtjUoNQihvUc__v5-oYPpgNRdhFGUd5dnYrqd4m3bAuVXzhSS9vmOha8A/exec',

@@ -1,5 +1,7 @@
 const LEVELS=[{"id": "p1", "icon": "👋", "title": "第 1 關｜哈囉，旅伴！", "concept": "print()：讓 Python 把文字顯示出來。", "scratch": "🐱 Scratch 的「說 ___」積木 → Python 的 print()", "steps": [{"title": "👀 看懂再改：自己的招呼語", "prompt": "先看黑框學會 print() 的寫法，再自己寫一句不同的招呼語。", "demo": "print(\"哈囉，旅伴！\")", "starter": "# 看懂黑框後，在下面自己寫\n", "requirements": ["使用 print()", "招呼語要有內容", "不能和黑框示範完全相同"], "rule": "p1_greeting", "mode": "demo", "ref": "print", "hints": ["先保留 print() 的外形，只思考引號裡要換成什麼。", "🐱 想想 Scratch「說 ___」積木：你會把積木裡的文字換掉。", "忘記 print() 的格式時，再開「📘 我想查指令」。"]}, {"title": "🚀 自己完成：旅行出發畫面", "prompt": "讓 Python 顯示兩行：第一行是「你想去的地方」，第二行是「你想做的事情」。兩行內容要不同。", "demo": "", "starter": "# 第一行：想去的地方\n# 第二行：想做的事情\n", "requirements": ["使用 2 次 print()", "顯示 2 行有內容的文字", "兩行文字不能完全相同"], "rule": "p1_two_distinct", "mode": "independent", "ref": "print", "hints": ["題目要求兩行，所以想想需要幾次 print()。", "每個 print() 負責一行；兩行要表達不同資訊。", "忘記寫法時，再查 print()。"]}]}, {"id": "p2", "icon": "🚌", "title": "第 2 關｜畢旅報名表", "concept": "變數 + input()：讓電腦詢問資料，並把回答記住。", "scratch": "🐱 Scratch 的「詢問並等待」＋變數 → Python 的 input()＋變數", "steps": [{"title": "👀 看懂再做：問一個問題並記住", "prompt": "黑框示範詢問食物。你的任務改成：詢問「最想去的城市」，把回答存進變數，再顯示那個變數。", "demo": "food = input(\"你喜歡什麼食物？\")\nprint(food)", "starter": "# 改成詢問最想去的城市\n", "requirements": ["使用 input() 詢問 1 次", "把回答存進變數", "使用 print() 顯示該變數"], "rule": "p2_one_input_var", "mode": "demo", "ref": "input", "hints": ["input() 的回答通常先放進一個變數。", "🐱 Scratch「詢問並等待」得到回答；Python 可以直接把回答放進變數。", "到小百科查 input() 與變數的範例。"]}, {"title": "🧩 兩份資料：姓名與班級", "prompt": "詢問「姓名」和「班級」兩項資料，分別存進兩個不同變數，最後把兩項資料都顯示出來。", "demo": "", "starter": "# 需要兩次詢問、兩個不同變數\n", "requirements": ["使用 input() 詢問 2 次", "使用 2 個不同變數保存回答", "最後顯示兩項資料"], "rule": "p2_two_inputs", "mode": "guided", "ref": "input", "hints": ["先想好兩個盒子的名字，再分別把 input() 放進去。", "兩個問題不要放進同一個變數，否則前一個回答會被蓋掉。", "查 input() 與變數。"]}, {"title": "🚀 自己完成：迷你旅行報名表", "prompt": "詢問「目的地、天數、最期待的活動」三項資料，分別記住，最後至少用一個 print() 把三項資料一起顯示。", "demo": "", "starter": "# 自己設計三個變數完成報名表\n", "requirements": ["使用 input() 詢問 3 次", "使用 3 個不同變數保存回答", "輸出時使用到這 3 個變數"], "rule": "p2_three_inputs_print", "mode": "independent", "ref": "variable", "hints": ["把任務拆成三個問題，每個問題配一個變數。", "最後的 print() 可以一次放進多個變數。", "如果忘記變數與 input()，再查小百科。"]}]}, {"id": "p3", "icon": "💰", "title": "第 3 關｜旅費計算器", "concept": "int() + 運算：把輸入的文字轉成整數，再讓 Python 幫你算。", "scratch": "🐱 Scratch 的運算積木 → Python 的 +、-、*、//、%", "steps": [{"title": "👀 看懂再算：票價總額", "prompt": "黑框示範兩個整數相加。你的任務是詢問「單張票價」和「張數」，用乘法算出總額並顯示。", "demo": "a = int(input(\"第一個整數：\"))\nb = int(input(\"第二個整數：\"))\nprint(a + b)", "starter": "# 單張票價 × 張數\n", "requirements": ["兩次輸入都用 int() 轉成整數", "使用乘法 *", "顯示計算結果"], "rule": "p3_multiply_int", "mode": "demo", "ref": "int", "hints": ["input() 得到文字；要做整數計算要先轉型。", "總額是「單價 × 數量」。", "查 int() 和運算。"]}, {"title": "🧩 平均分配：每人多少、剩多少", "prompt": "詢問「點心總數」和「人數」，算出每人可以拿幾個，以及最後剩幾個。", "demo": "", "starter": "# 需要用到整除 // 和餘數 %\n", "requirements": ["使用 2 次 int(input())", "使用 // 算每人幾個", "使用 % 算剩幾個", "把兩個結果都顯示"], "rule": "p3_divmod", "mode": "guided", "ref": "operator", "hints": ["「平均每人幾個整數」需要整除。", "「分完還剩多少」需要餘數。", "查 // 和 %。"]}, {"title": "🚀 自己完成：旅行預算", "prompt": "詢問「總預算、交通費、餐費」，算出扣掉交通費和餐費後還剩多少錢。", "demo": "", "starter": "# 剩餘預算 = 總預算 - 交通費 - 餐費\n", "requirements": ["使用 3 次 int(input())", "使用減法 - 計算", "顯示剩餘預算"], "rule": "p3_budget", "mode": "independent", "ref": "operator", "hints": ["先用三個變數把三筆金額記住。", "算式可以連續減兩次。", "忘記 int() 時再查小百科。"]}]}, {"id": "p4", "icon": "📐", "title": "第 4 關｜旅行數字工具", "concept": "float()、**、round()：處理小數、次方與整理小數位數。", "scratch": "🐱 Scratch 的數學運算 → Python 可以組合小數、次方和四捨五入", "steps": [{"title": "👀 看懂再做：正方形面積", "prompt": "黑框示範小數乘法。你的任務是詢問正方形邊長（可有小數），用 ** 2 算面積，再用 round(..., 2) 顯示到小數第 2 位。", "demo": "length = float(input(\"長度：\"))\nprint(round(length * 2, 2))", "starter": "# 面積 = 邊長 ** 2\n", "requirements": ["使用 float(input())", "使用 ** 2", "使用 round(..., 2)", "顯示結果"], "rule": "p4_square", "mode": "demo", "ref": "round", "hints": ["小數輸入要用 float()。", "平方可以寫成 ** 2。", "round(數字, 2) 表示整理到小數第 2 位。"]}, {"title": "🚀 自己完成：平均速度", "prompt": "詢問「距離（公里）」和「時間（小時）」，計算平均速度＝距離 ÷ 時間，最後四捨五入到小數第 1 位。", "demo": "", "starter": "# 平均速度 = 距離 / 時間\n", "requirements": ["兩次輸入都使用 float()", "使用除法 /", "使用 round(..., 1)", "顯示平均速度"], "rule": "p4_speed", "mode": "independent", "ref": "round", "hints": ["距離和時間都可能有小數。", "先算距離 / 時間，再交給 round()。", "查 float()、/、round()。"]}]}, {"id": "p5", "icon": "🎢", "title": "第 5 關｜條件判斷", "concept": "比較 + if / else：讓程式依條件走不同路。", "scratch": "🐱 Scratch 的「如果／否則」→ Python 的 if / else", "steps": [{"title": "👀 看懂再判斷：是否達標", "prompt": "黑框示範溫度判斷。你的任務是詢問一個分數：60 分以上顯示「通過」，否則顯示「再挑戰」。", "demo": "temp = 30\nif temp >= 28:\n    print(\"很熱\")\nelse:\n    print(\"還好\")", "starter": "# 60 分以上通過，否則再挑戰\n", "requirements": ["使用 int(input()) 取得分數", "使用 if 和 else", "條件中比較 60", "兩個分支都要有輸出"], "rule": "p5_pass", "mode": "demo", "ref": "if", "hints": ["先取得分數，再判斷是否 >= 60。", "if 後面的條件要加冒號；else 也要加冒號。", "查 if / else 與縮排。"]}, {"title": "🧩 反方向條件：是否需要帶傘", "prompt": "詢問降雨機率（0～100）。如果大於等於 50，顯示「帶傘」；否則顯示「不用帶傘」。", "demo": "", "starter": "# 以 50 為分界\n", "requirements": ["使用 int(input())", "使用 if / else", "使用 >= 50 的比較", "兩個分支都輸出"], "rule": "p5_rain", "mode": "guided", "ref": "if", "hints": ["條件的分界數字是 50。", "兩種結果剛好適合 if / else。", "需要時再查比較與 if。"]}, {"title": "🚀 自己完成：自訂門檻", "prompt": "自己選一個「數字門檻」情境，例如剩餘電量、作業完成數等。程式要詢問一個整數，並用 if / else 顯示兩種不同結果。", "demo": "", "starter": "# 自己決定情境與門檻\n", "requirements": ["使用 int(input())", "使用 if / else", "至少使用一個比較運算", "兩個分支的輸出文字要不同"], "rule": "p5_custom_threshold", "mode": "independent", "ref": "if", "hints": ["先決定要問什麼數字，以及門檻是多少。", "想清楚達到門檻和沒達到時要各說什麼。", "查比較運算和 if / else。"]}]}, {"id": "p6", "icon": "🎫", "title": "第 6 關｜多重選擇", "concept": "if / elif / else：不只兩種情況時，用 elif 增加分支。", "scratch": "🐱 Scratch 的多層「如果／否則」→ Python 的 if / elif / else", "steps": [{"title": "👀 看懂再分類：三種結果", "prompt": "黑框示範三段分數分類。你的任務是詢問年齡：未滿 6 顯示「幼童」、未滿 18 顯示「學生」、其餘顯示「成人」。", "demo": "score=75\nif score>=90:\n    print(\"A\")\nelif score>=60:\n    print(\"B\")\nelse:\n    print(\"C\")", "starter": "# 三種年齡分類\n", "requirements": ["使用 int(input())", "使用 if、至少 1 個 elif、else", "使用 6 和 18 作為分界", "三個分支都要有輸出"], "rule": "p6_age3", "mode": "demo", "ref": "elif", "hints": ["三種結果需要三條路。", "先判斷最小的年齡區間通常比較容易。", "查 if / elif / else。"]}, {"title": "🚀 自己完成：四級天氣提醒", "prompt": "詢問氣溫：低於 15 顯示「偏冷」、低於 25 顯示「舒適」、低於 32 顯示「偏熱」、其餘顯示「炎熱」。", "demo": "", "starter": "# 需要四種結果\n", "requirements": ["使用 int(input())", "使用 if、至少 2 個 elif、else", "條件中使用 15、25、32", "四個分支都有輸出"], "rule": "p6_temp4", "mode": "independent", "ref": "elif", "hints": ["四種結果會需要 if + 2 個 elif + else。", "條件可以由小到大排。", "忘記 elif 格式時再查小百科。"]}]}, {"id": "p7", "icon": "🏎️", "title": "第 7 關｜雙重條件", "concept": "and / or：把兩個判斷條件組合起來。", "scratch": "🐱 Scratch 的「且」「或」→ Python 的 and / or", "steps": [{"title": "👀 兩個都要：and", "prompt": "黑框示範 and。你的任務是詢問「作業是否完成（1/0）」和「用品是否帶齊（1/0）」，兩者都等於 1 才顯示「可以出發」，否則顯示「先完成準備」。", "demo": "sunny=True\nfree=True\nif sunny and free:\n    print(\"去公園\")\nelse:\n    print(\"留在家\")", "starter": "# 兩個條件都成立才可以出發\n", "requirements": ["取得 2 個整數輸入", "使用 and", "使用 if / else", "兩個條件都要參與判斷"], "rule": "p7_and", "mode": "demo", "ref": "logic", "hints": ["題目說「兩者都」，對應的是 and。", "可以用 == 1 比較每個輸入。", "查 and。"]}, {"title": "🚀 其中一個即可：or", "prompt": "詢問「有學生證（1/0）」和「有活動證（1/0）」。只要其中一個等於 1 就顯示「可以入場」，兩個都沒有才顯示「無法入場」。", "demo": "", "starter": "# 其中一個成立即可\n", "requirements": ["取得 2 個整數輸入", "使用 or", "使用 if / else", "兩個條件都要參與判斷"], "rule": "p7_or", "mode": "independent", "ref": "logic", "hints": ["題目說「其中一個即可」，對應 or。", "兩個比較式放在 or 的左右兩邊。", "需要時查 or。"]}]}, {"id": "p8", "icon": "🚌", "title": "第 8 關｜規律重複", "concept": "for + range()：按照數字規律重複執行。", "scratch": "🐱 Scratch 的「重複指定次數」→ Python 的 for / range()", "steps": [{"title": "👀 看懂 range：顯示 1～5", "prompt": "黑框示範 range(3)。你的任務用 for + range() 顯示 1、2、3、4、5。", "demo": "for i in range(3):\n    print(i)", "starter": "# 顯示 1 到 5\n", "requirements": ["使用 for", "使用 range()", "輸出 1～5 的數字"], "rule": "p8_1to5", "mode": "demo", "ref": "for", "hints": ["range() 可以設定開始與停止位置。", "停止位置本身不會被包含。", "查 range(start, stop)。"]}, {"title": "🧩 發車倒數：5～1", "prompt": "用 for + range() 依序顯示 5、4、3、2、1，最後再顯示一次「出發！」。", "demo": "", "starter": "# 倒數時每次要 -1\n", "requirements": ["使用 for + range()", "range() 使用負的步進", "倒數 5 到 1", "迴圈結束後顯示「出發！」"], "rule": "p8_countdown", "mode": "guided", "ref": "for", "hints": ["range() 第三個數字可以決定每次增加或減少多少。", "倒數時步進是負數。", "「出發！」只出現一次，所以想想它應不應該縮排。"]}, {"title": "🚀 自己找規律：偶數", "prompt": "用 for + range() 顯示 2、4、6、8、10。不要在程式中寫 5 個 print()。", "demo": "", "starter": "# 用 range() 的步進完成\n", "requirements": ["使用 for + range()", "range() 的步進為 2", "不能使用 5 個獨立 print()"], "rule": "p8_even", "mode": "independent", "ref": "for", "hints": ["這串數字每次增加多少？", "range() 的第三個參數就是步進。", "查 range(start, stop, step)。"]}]}, {"id": "p9", "icon": "🔐", "title": "第 9 關｜條件式重複", "concept": "while：只要條件仍成立，就繼續重複。", "scratch": "🐱 Scratch 的「重複直到」→ Python 常用 while 表達「還要繼續的條件」", "steps": [{"title": "👀 看懂 while：數到 5", "prompt": "黑框示範數到 3。你的任務改成依序顯示 1、2、3、4、5，而且要用 while。", "demo": "count=1\nwhile count<=3:\n    print(count)\n    count=count+1", "starter": "# 改成數到 5\n", "requirements": ["使用 while", "計數從 1 開始", "條件讓迴圈做到 5", "每次迴圈更新計數變數"], "rule": "p9_count5", "mode": "demo", "ref": "while", "hints": ["while 後面的條件要允許 5 被執行。", "每一輪都要讓計數器改變，否則可能無限重複。", "查 while。"]}, {"title": "🧩 密碼鎖：答對才停止", "prompt": "先設定一個你自己決定的四位數密碼。使用 while 重複詢問密碼；輸入不正確時繼續問，正確後才顯示「解鎖！」。", "demo": "", "starter": "# 設定答案，再用 while 重複詢問\n", "requirements": ["先設定一個四位數整數答案", "使用 while", "迴圈中使用 int(input())", "正確後在迴圈外顯示「解鎖！」"], "rule": "p9_password", "mode": "guided", "ref": "while", "hints": ["while 的條件可以寫成「輸入的密碼 != 正確答案」。", "輸入值每一輪都要更新。", "「解鎖！」應該等迴圈結束才顯示。"]}, {"title": "🚀 自己完成：密碼高低提示", "prompt": "延續密碼鎖：密碼猜錯時，用 if / elif 顯示「太大」或「太小」；猜中後離開 while 並顯示「解鎖！」。", "demo": "", "starter": "# while 裡加入 if / elif 提示\n", "requirements": ["使用 while", "迴圈中使用 if 與 elif", "至少比較 > 和 <", "答對後離開迴圈並顯示解鎖訊息"], "rule": "p9_password_hint", "mode": "independent", "ref": "while", "hints": ["先讓 while 負責『猜錯就繼續』。", "再在 while 裡比較目前輸入和答案的大小。", "可以同時查 while 與 if / elif。"]}]}, {"id": "p10", "icon": "🐉", "title": "第 10 關｜魔王關：猜數字", "concept": "random + while + if：把前面學過的工具組合成完整小遊戲。", "scratch": "🐱 Scratch 的隨機數＋重複＋判斷 → Python 的 random＋while＋if", "steps": [{"title": "👀 先學隨機：1～10", "prompt": "黑框示範骰子 1～6。你的任務改成產生 1～10 的隨機整數並顯示。", "demo": "import random\ndice = random.randint(1, 6)\nprint(dice)", "starter": "# 產生 1 到 10 的隨機整數\n", "requirements": ["import random", "使用 random.randint()", "範圍是 1 到 10", "顯示產生的數字"], "rule": "p10_random10", "mode": "demo", "ref": "random", "hints": ["randint() 的兩個數字都可能被抽到。", "把黑框的 1～6 改成任務需要的範圍。", "查 random.randint()。"]}, {"title": "🧩 猜數字：太大／太小", "prompt": "讓電腦隨機選 1～20 的答案。玩家一直猜到正確為止；太大顯示「太大」，太小顯示「太小」。", "demo": "", "starter": "# random + while + if / elif\n", "requirements": ["隨機答案範圍 1～20", "使用 while 重複輸入", "使用 if / elif 提示太大或太小", "猜中後能結束迴圈"], "rule": "p10_guess20", "mode": "guided", "ref": "random", "hints": ["先完成隨機答案，再處理 while。", "while 裡每次取得新的 guess，再用 if / elif 比較。", "把問題拆成 random、while、if 三小塊。"]}, {"title": "🐉 魔王挑戰：完整猜數字遊戲", "prompt": "完成 1～100 猜數字遊戲。除了太大／太小提示，還要用一個變數記錄猜了幾次，答對時顯示總次數。", "demo": "", "starter": "# 不提供骨架：自己組合已學過的工具\n", "requirements": ["隨機答案範圍 1～100", "使用 while", "使用 if / elif 做大小提示", "使用一個計次變數，每猜一次增加 1", "答對後顯示猜測次數"], "rule": "p10_boss", "mode": "independent", "ref": "random", "hints": ["先完成『能猜到答案』，最後再加計次功能。", "計次變數可以從 0 開始，每次 input() 後增加 1。", "卡住時分別查 random、while、if，不要直接找整題答案。"]}]}];
 const TOTAL_CHALLENGES=26;
+const STUDENT_ACCOUNTS_ENABLED=window.CONFIG?.STUDENT_ACCOUNTS_ENABLED===true;
+const LOCAL_PROGRESS_STATUS=STUDENT_ACCOUNTS_ENABLED?"💾 本機模式":"💾 本機模式（學習帳號暫停）";
 
 const KEY="course115_v3_progress", NAMEKEY="course115_v3_name";
 const PROFILE_KEY="course115_student_profile_v6";
@@ -526,6 +528,7 @@ function updateProfileStrip(){
 }
 
 function updateAccountButton(){
+  if(!STUDENT_ACCOUNTS_ENABLED)return;
   const btn=document.getElementById("accountBtn");
   if(!btn)return;
   if(window.CourseDB&&CourseDB.state==="ready"&&!CourseDB.isAnonymous()){
@@ -550,6 +553,7 @@ function starsOfProgress(progress){
 }
 
 function openAccountDialog(required=false){
+  if(!STUDENT_ACCOUNTS_ENABLED)return;
   const p=getStudentProfile();
   if(!profileIsValid(p)){
     openProfileDialog(true);
@@ -614,6 +618,7 @@ async function adoptRemoteAndLocalProgress(){
 }
 
 async function linkLearningAccount(){
+  if(!STUDENT_ACCOUNTS_ENABLED)return;
   const p=getStudentProfile();
   const err=document.getElementById("accountError");
   const pw=accountPassword();
@@ -646,6 +651,7 @@ async function linkLearningAccount(){
 }
 
 async function loginLearningAccount(){
+  if(!STUDENT_ACCOUNTS_ENABLED)return;
   const p=getStudentProfile();
   const err=document.getElementById("accountError");
   const pw=accountPassword();
@@ -678,6 +684,7 @@ async function loginLearningAccount(){
 function ensureStableStudentAccount(){
   updateAccountButton();
   if(
+    STUDENT_ACCOUNTS_ENABLED &&
     window.CourseDB &&
     CourseDB.state==="ready" &&
     CourseDB.isAnonymous() &&
@@ -752,13 +759,16 @@ async function retryFirebaseConnection(){
 }
 async function syncCloudProgress(){
   const profile=getStudentProfile();
-  if(!profileIsValid(profile))return false;
   if(!window.CourseDB){updateCloudStatus("💾 僅儲存在本機","error");return false;}
   try{
     await CourseDB.ready;
     if(!CourseDB.configured||CourseDB.state!=="ready"){
       updateCloudStatus("⚠️ 資料庫尚未連線","error");return false;
     }
+    if(!STUDENT_ACCOUNTS_ENABLED&&(!CourseDB.uid||CourseDB.isAnonymous())){
+      updateCloudStatus(LOCAL_PROGRESS_STATUS,"local");return false;
+    }
+    if(!profileIsValid(profile))return false;
     if(CourseDB.isAnonymous()){
       updateCloudStatus("🔐 請建立／登入學習帳號","error");
       ensureStableStudentAccount();
@@ -819,12 +829,12 @@ function ensureStudentProfile(){
 async function restoreCloudState(){
   updateProfileStrip();
   if(!window.CourseDB){
-    updateCloudStatus("💾 本機模式","local");ensureStudentProfile();return;
+    updateCloudStatus(LOCAL_PROGRESS_STATUS,"local");ensureStudentProfile();return;
   }
   try{
     await CourseDB.ready;
     if(!CourseDB.configured||CourseDB.state==="disabled"){
-      updateCloudStatus("💾 本機模式","local");ensureStudentProfile();return;
+      updateCloudStatus(LOCAL_PROGRESS_STATUS,"local");ensureStudentProfile();return;
     }
     if(CourseDB.state!=="ready"){
       updateCloudStatus("⚠️ 資料庫連線失敗（點此查看原因）","error");ensureStudentProfile();return;
@@ -853,10 +863,8 @@ async function restoreCloudState(){
     syncCourse116HubProgress();
     updateCloudStatus("☁️ 已連接教師資料庫","ok");
     ensureStudentProfile();
-    if(profileIsValid(getStudentProfile())){
-      await syncCloudProgress();
-      ensureStableStudentAccount();
-    }
+    await syncCloudProgress();
+    ensureStableStudentAccount();
   }catch(e){
     updateCloudStatus("⚠️ 資料庫連線失敗（點此查看原因）","error");
     ensureStudentProfile();
