@@ -1,0 +1,8 @@
+(async function(){const cfg=window.COURSE115_FIREBASE_CONFIG,$=s=>document.querySelector(s);
+const [a,b,f]=await Promise.all([import("https://www.gstatic.com/firebasejs/12.19.0/firebase-app.js"),import("https://www.gstatic.com/firebasejs/12.19.0/firebase-auth.js"),import("https://www.gstatic.com/firebasejs/12.19.0/firebase-functions.js")]);
+const app=a.getApps().length?a.getApp():a.initializeApp(cfg),auth=b.getAuth(app),fn=f.getFunctions(app,"asia-east1"),call=(n,d)=>f.httpsCallable(fn,n)(d).then(r=>r.data);
+const data=()=>({className:$("#cls").value.trim(),seatNo:$("#seat").value.trim(),name:$("#name").value.trim()});
+$("#loginBtn").onclick=async()=>{try{await b.signInWithEmailAndPassword(auth,$("#email").value.trim(),$("#password").value);$("#login").classList.add("hidden");$("#app").classList.remove("hidden")}catch(e){$("#loginMsg").textContent=e.message}};
+$("#inspectBtn").onclick=async()=>{try{const r=await call("inspectLegacyStudent",data());$("#inspect").textContent=`固定帳號：${r.authExists?"已存在":"尚未建立"}\n找到 ${r.rows.length} 筆紀錄\n`+r.rows.map(x=>`${x.name}｜⭐${x.stars}｜${x.id}`).join("\n")}catch(e){$("#inspect").textContent=e.message}};
+$("#rescueBtn").onclick=async()=>{if(prompt("請輸入「救援」確認")!=="救援")return;try{const r=await call("teacherRescueStudentAccount",{...data(),newPassword:$("#newPassword").value});$("#result").textContent=`✅ 完成\n合併 ${r.recordsMerged} 筆\n正式星星 ${r.mergedStars}/26\n帳號 ${r.email}`;}catch(e){$("#result").textContent=e.message}};
+if(auth.currentUser){$("#login").classList.add("hidden");$("#app").classList.remove("hidden")}})();
